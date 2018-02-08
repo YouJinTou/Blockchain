@@ -34,6 +34,8 @@ namespace Models
 
         public string Signature => this.signature;
 
+        public DateTime CreatedOn => this.createdOn;
+
         public string Hash => this.hash;
 
         private void CalculateHash()
