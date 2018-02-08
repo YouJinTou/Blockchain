@@ -52,7 +52,7 @@ namespace Models
 
         public DateTime MinedOn => this.minedOn;
 
-        public void CalculateHash(IHasher hasher)
+        private void CalculateHash(IHasher hasher)
         {
             this.hash = hasher.GetHash(this.GetMetadataString());
         }
