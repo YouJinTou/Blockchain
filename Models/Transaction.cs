@@ -11,8 +11,8 @@ namespace Models
         private decimal amount;
         private string signature;
         private uint blockId;
-        private string hash;
         private DateTime createdOn;
+        private string hash;
 
         public Transaction(Address from, Address to, decimal amount, string signature, uint blockId)
         {
@@ -42,11 +42,14 @@ namespace Models
             var metadataBytes = Encoding.Unicode.GetBytes(metadataString);
             var hasher = new SHA256Managed();
             var hashBytes = hasher.ComputeHash(metadataBytes);
+            var hashBuilder = new StringBuilder();
 
             foreach (var hashByte in hashBytes)
             {
-                this.hash += hashByte.ToString("x");
+                hashBuilder.Append(hashByte.ToString("x"));
             }
+
+            this.hash = hashBuilder.ToString();
         }
 
         private string GetMetadataString()
