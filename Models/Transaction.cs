@@ -1,5 +1,5 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using Models.Hashing;
+using System;
 using System.Text;
 
 namespace Models
@@ -14,7 +14,13 @@ namespace Models
         private DateTime createdOn;
         private string hash;
 
-        public Transaction(Address from, Address to, decimal amount, string signature, uint blockId)
+        public Transaction(
+            Address from, 
+            Address to, 
+            decimal amount, 
+            string signature, 
+            uint blockId, 
+            IHasher hasher = null)
         {
             this.from = from;
             this.to = to;
@@ -23,7 +29,7 @@ namespace Models
             this.blockId = blockId;
             this.createdOn = DateTime.Now;
 
-            this.CalculateHash();
+            this.CalculateHash(hasher ?? new Sha256Hasher());
         }
 
         public Address From => this.from;
@@ -38,20 +44,9 @@ namespace Models
 
         public string Hash => this.hash;
 
-        private void CalculateHash()
+        public void CalculateHash(IHasher hasher)
         {
-            var metadataString = this.GetMetadataString();
-            var metadataBytes = Encoding.Unicode.GetBytes(metadataString);
-            var hasher = new SHA256Managed();
-            var hashBytes = hasher.ComputeHash(metadataBytes);
-            var hashBuilder = new StringBuilder();
-
-            foreach (var hashByte in hashBytes)
-            {
-                hashBuilder.Append(hashByte.ToString("x"));
-            }
-
-            this.hash = hashBuilder.ToString();
+            this.hash = hasher.GetHash(this.GetMetadataString());
         }
 
         private string GetMetadataString()
@@ -66,6 +61,11 @@ namespace Models
             sb.Append(this.createdOn.Ticks.ToString());
 
             return sb.ToString();
+        }
+
+        public override string ToString()
+        {
+            return this.hash;
         }
     }
 }
