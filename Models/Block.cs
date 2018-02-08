@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Models.Hashing;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Models
 {
@@ -18,19 +20,20 @@ namespace Models
             uint id, 
             IEnumerable<Transaction> transactions,
             uint difficulty,
-            string hash,
             string previousHash,
             Address minedBy,
-            ulong nonce)
+            ulong nonce,
+            IHasher hasher = null)
         {
             this.id = id;
             this.transactions = transactions;
             this.difficulty = difficulty;
-            this.hash = hash;
             this.previousHash = previousHash;
             this.minedBy = minedBy;
             this.nonce = nonce;
             this.minedOn = DateTime.Now;
+
+            this.CalculateHash(hasher ?? new Sha256Hasher());
         }
 
         public uint Id => this.id;
@@ -48,5 +51,24 @@ namespace Models
         public ulong Nonce => this.nonce;
 
         public DateTime MinedOn => this.minedOn;
+
+        public void CalculateHash(IHasher hasher)
+        {
+            this.hash = hasher.GetHash(this.GetMetadataString());
+        }
+
+        private string GetMetadataString()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(this.difficulty.ToString());
+            sb.Append(this.id.ToString());
+            sb.Append(this.minedBy.ToString());
+            sb.Append(this.minedOn.Ticks.ToString());
+            sb.Append(this.nonce.ToString());
+            sb.Append(this.previousHash.ToString());
+
+            return sb.ToString();
+        }
     }
 }
