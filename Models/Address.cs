@@ -10,5 +10,10 @@
         }
 
         public string Id => id;
+
+        public override string ToString()
+        {
+            return this.id;
+        }
     }
 }
