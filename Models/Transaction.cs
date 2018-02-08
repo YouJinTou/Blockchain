@@ -44,7 +44,7 @@ namespace Models
 
         public string Hash => this.hash;
 
-        public void CalculateHash(IHasher hasher)
+        private void CalculateHash(IHasher hasher)
         {
             this.hash = hasher.GetHash(this.GetMetadataString());
         }
