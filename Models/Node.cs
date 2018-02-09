@@ -86,6 +86,8 @@ namespace Models
 
             this.blockchain.AddLast(block);
 
+            this.AdjustBalances(block);
+
             this.BroadcastBlock(block);
         }
 
