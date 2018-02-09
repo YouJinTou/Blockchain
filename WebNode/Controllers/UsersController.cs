@@ -12,6 +12,7 @@ namespace WebNode.Controllers
         {
         }
 
+        [HttpPost]
         public IActionResult Register([FromBody]RegisterUserModel model)
         {
             try
