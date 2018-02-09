@@ -4,6 +4,8 @@ using Models.Validation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Tests.Models
 {
@@ -63,6 +65,18 @@ namespace Tests.Models
             this.node2.AddPeer(this.node1);
 
             Assert.That(this.node2.Blockchain.Count == 1);
+        }
+
+        [TestCase]
+        public async Task TryUpdateChain_PeerAddedBlockAfterHandshake_UpdateChainAfterPoll()
+        {
+            this.node1.AddPeer(this.node2);
+
+            this.node2.ReceiveBlock(genesisBlock);
+
+            await Task.Delay(TimeSpan.FromSeconds(1.1));
+
+            Assert.That(this.node1.Blockchain.Count == 1);
         }
 
         private Block GetValidBlock(string prevBlockHash, uint prevId)

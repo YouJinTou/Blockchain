@@ -1,11 +1,14 @@
 ﻿using Models.Validation;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Models
 {
     public class Node
     {
+        private readonly object locker = new object();
+
         private string name;
         private Uri networkAddress;
         private ICollection<Node> peers;
@@ -13,7 +16,7 @@ namespace Models
         private ICollection<Transaction> pendingTransactions;
         private IDictionary<Address, uint> miningJobs;
         private IDictionary<Address, decimal> balances;
-        private IBlockchainValidator blockchainValidator;
+        private IBlockchainValidator chainValidator;
 
         public Node(string name, Uri networkAddress, IBlockchainValidator blockchainValidator)
         {
@@ -24,7 +27,9 @@ namespace Models
             this.pendingTransactions = new List<Transaction>();
             this.miningJobs = new Dictionary<Address, uint>();
             this.balances = new Dictionary<Address, decimal>();
-            this.blockchainValidator = blockchainValidator;
+            this.chainValidator = blockchainValidator;
+
+            Task.Run(() => TryUpdateChain());
         }
 
         public string Name => this.name;
@@ -45,9 +50,9 @@ namespace Models
         {
             this.peers.Add(peer);
 
-            if (this.blockchainValidator.ShouldUpdateChain(this, peer))
+            if (this.chainValidator.ShouldUpdateChain(this, peer))
             {
-                this.blockchain = peer.Blockchain;
+                this.UpdateChain(peer);
             }
         }
 
@@ -61,7 +66,7 @@ namespace Models
 
         public void ReceiveBlock(Block block)
         {
-            if (!this.blockchainValidator.BlockIsValid(this.blockchain.Last?.Value, block))
+            if (!this.chainValidator.BlockIsValid(this.blockchain.Last?.Value, block))
             {
                 return;
             }
@@ -69,6 +74,30 @@ namespace Models
             this.blockchain.AddLast(block);
 
             this.BroadcastBlock(block);
+        }
+
+        private void TryUpdateChain()
+        {
+            while (true)
+            {
+                foreach (var peer in this.peers)
+                {
+                    if (this.chainValidator.ShouldUpdateChain(this, peer))
+                    {
+                        this.UpdateChain(peer);
+                    }
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(1));
+            }
+        }
+
+        private void UpdateChain(Node peer)
+        {
+            lock (this.locker)
+            {
+                this.blockchain = peer.Blockchain;
+            }
         }
     }
 }
