@@ -1,6 +1,7 @@
 ﻿using Models.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Models
@@ -131,6 +132,19 @@ namespace Models
             lock (this.locker)
             {
                 this.blockchain = peer.Blockchain;
+            }
+        }
+
+        private void AdjustBalances(Block block)
+        {
+            foreach (var transaction in block.Transactions)
+            {
+                var matchingTransaction = 
+                    this.pendingTransactions.First(t => t.Hash == transaction.Hash);
+                this.balances[matchingTransaction.From] -= matchingTransaction.Amount;
+                this.balances[matchingTransaction.To] += matchingTransaction.Amount;
+
+                this.pendingTransactions.Remove(matchingTransaction);
             }
         }
     }
