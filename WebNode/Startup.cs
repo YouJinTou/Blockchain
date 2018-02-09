@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Hashing;
 using Models.Validation;
 using WebNode.Code;
 
@@ -20,6 +21,7 @@ namespace WebNode
         {
             services.AddMvc();
             services.AddSingleton<INodeService, NodeService>();
+            services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
             services.AddTransient<ITransactionValidator, TransactionValidator>();
         }
@@ -31,7 +33,10 @@ namespace WebNode
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller}/{action}/{id?}");
+            });
         }
     }
 }
