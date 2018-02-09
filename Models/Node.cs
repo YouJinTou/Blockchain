@@ -75,14 +75,6 @@ namespace Models
             }
         }
 
-        public void BroadcastBlock(Block block)
-        {
-            foreach (var peer in this.peers)
-            {
-                peer.ReceiveBlock(block);
-            }
-        }
-
         public void ReceiveBlock(Block block)
         {
             if (!this.chainValidator.BlockIsValid(this.blockchain.Last?.Value, block))
@@ -153,6 +145,14 @@ namespace Models
                 this.balances[matchingTransaction.To] += matchingTransaction.Amount;
 
                 this.pendingTransactions.Remove(matchingTransaction);
+            }
+        }
+
+        private void BroadcastBlock(Block block)
+        {
+            foreach (var peer in this.peers)
+            {
+                peer.ReceiveBlock(block);
             }
         }
 
