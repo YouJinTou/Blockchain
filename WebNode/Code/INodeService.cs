@@ -5,5 +5,7 @@ namespace WebNode.Code
     public interface INodeService
     {
         void RegisterAddress(RegisterUserModel model);
+
+        void ReceiveTransaction(TransactionModel model);
     }
 }
