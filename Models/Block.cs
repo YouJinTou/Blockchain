@@ -52,11 +52,6 @@ namespace Models
 
         public DateTime MinedOn => this.minedOn;
 
-        private void CalculateHash(IHasher hasher)
-        {
-            this.hash = hasher.GetHash(this.GetMetadataString());
-        }
-
         public string GetMetadataString()
         {
             var sb = new StringBuilder();
@@ -69,6 +64,11 @@ namespace Models
             sb.Append(this.previousHash.ToString());
 
             return sb.ToString();
+        }
+
+        private void CalculateHash(IHasher hasher)
+        {
+            this.hash = hasher.GetHash(this.GetMetadataString());
         }
     }
 }
