@@ -11,7 +11,7 @@ namespace Models
         private IEnumerable<Transaction> transactions;
         private uint difficulty;
         private string previousHash;
-        private Address minedBy;
+        private string minedBy;
         private ulong nonce;
         private DateTime minedOn;
         private string hash;
@@ -21,7 +21,7 @@ namespace Models
             IEnumerable<Transaction> transactions,
             uint difficulty,
             string previousHash,
-            Address minedBy,
+            string minedBy,
             ulong nonce,
             IHasher hasher = null)
         {
@@ -46,7 +46,7 @@ namespace Models
 
         public string PreviousHash => this.previousHash;
 
-        public Address MinedBy => this.minedBy;
+        public string MinedBy => this.minedBy;
 
         public ulong Nonce => this.nonce;
 

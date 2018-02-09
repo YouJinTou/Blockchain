@@ -6,16 +6,16 @@ namespace Models
 {
     public class Transaction
     {
-        private Address from;
-        private Address to;
+        private string from;
+        private string to;
         private decimal amount;
         private string signature;
         private DateTime createdOn;
         private string hash;
 
         public Transaction(
-            Address from, 
-            Address to, 
+            string from, 
+            string to, 
             decimal amount, 
             string signature, 
             IHasher hasher = null)
@@ -29,9 +29,9 @@ namespace Models
             this.CalculateHash(hasher ?? new Sha256Hasher());
         }
 
-        public Address From => this.from;
+        public string From => this.from;
 
-        public Address To => this.to;
+        public string To => this.to;
 
         public decimal Amount => this.amount;
 

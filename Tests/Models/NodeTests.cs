@@ -15,7 +15,7 @@ namespace Tests.Models
 
         private Node node1;
         private Node node2;
-        private Address minerAddress;
+        private string minerAddress;
         private Block genesisBlock;
         private Block block1;
 
@@ -26,7 +26,7 @@ namespace Tests.Models
             var txValidator = new TransactionValidator(new Sha256Hasher());
             this.node1 = new Node("Node 1", new Uri("http://127.0.1.1"), chainValidator, txValidator);
             this.node2 = new Node("Node 2", new Uri("http://127.0.1.2"), chainValidator, txValidator);
-            this.minerAddress = new Address("miner-address");
+            this.minerAddress = "miner-address";
             this.genesisBlock = new Block(
                 0, new List<Transaction>(), Difficulty, string.Empty, minerAddress, 0);
             this.block1 = this.GetValidBlock(this.genesisBlock.Hash, this.genesisBlock.Id);

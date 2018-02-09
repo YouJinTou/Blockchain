@@ -5,6 +5,6 @@ namespace Models.Validation
     public interface ITransactionValidator
     {
         void ValidateTransaction(
-            Transaction transaction, IDictionary<Address, decimal> balances);
+            Transaction transaction, IDictionary<string, decimal> balances);
     }
 }

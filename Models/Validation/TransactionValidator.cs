@@ -14,16 +14,16 @@ namespace Models.Validation
         }
 
         public void ValidateTransaction(
-            Transaction transaction, IDictionary<Address, decimal> balances)
+            Transaction transaction, IDictionary<string, decimal> balances)
         {
             if (!balances.ContainsKey(transaction.From))
             {
-                throw new ArgumentException($"Invalid sender {transaction.From.Id}.");
+                throw new ArgumentException($"Invalid sender {transaction.From}.");
             }
 
             if (!balances.ContainsKey(transaction.To))
             {
-                throw new ArgumentException($"Invalid recipient {transaction.To.Id}.");
+                throw new ArgumentException($"Invalid recipient {transaction.To}.");
             }
 
             if (transaction.Amount <= 0.0m)

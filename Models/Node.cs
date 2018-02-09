@@ -15,8 +15,8 @@ namespace Models
         private ICollection<Node> peers;
         private LinkedList<Block> blockchain;
         private ICollection<Transaction> pendingTransactions;
-        private IDictionary<Address, uint> miningJobs;
-        private IDictionary<Address, decimal> balances;
+        private IDictionary<string, uint> miningJobs;
+        private IDictionary<string, decimal> balances;
         private IBlockchainValidator chainValidator;
         private ITransactionValidator transactionValidator;
         private uint difficulty;
@@ -32,8 +32,8 @@ namespace Models
             this.peers = new List<Node>();
             this.blockchain = new LinkedList<Block>();
             this.pendingTransactions = new List<Transaction>();
-            this.miningJobs = new Dictionary<Address, uint>();
-            this.balances = new Dictionary<Address, decimal>();
+            this.miningJobs = new Dictionary<string, uint>();
+            this.balances = new Dictionary<string, decimal>();
             this.chainValidator = blockchainValidator;
             this.transactionValidator = transactionValidator;
             this.difficulty = 2;
@@ -51,9 +51,9 @@ namespace Models
 
         public ICollection<Transaction> PendingTransactions => this.pendingTransactions;
 
-        public IDictionary<Address, uint> MiningJobs => this.miningJobs;
+        public IDictionary<string, uint> MiningJobs => this.miningJobs;
 
-        public IDictionary<Address, decimal> Balances => this.balances;
+        public IDictionary<string, decimal> Balances => this.balances;
 
         public Block LastBlock => this.blockchain.Last?.Value;
 
@@ -98,7 +98,7 @@ namespace Models
             this.pendingTransactions.Add(transaction);
         }
 
-        public void RegisterAddress(Address address, decimal balance)
+        public void RegisterAddress(string address, decimal balance)
         {
             if (balance < 0.0m)
             {
@@ -107,7 +107,7 @@ namespace Models
 
             if (this.balances.ContainsKey(address))
             {
-                throw new ArgumentException($"Address {address.Id} already exists.");
+                throw new ArgumentException($"Address {address} already exists.");
             }
 
             this.balances.Add(address, balance);

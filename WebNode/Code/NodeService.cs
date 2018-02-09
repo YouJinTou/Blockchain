@@ -11,18 +11,27 @@ namespace WebNode.Code
         private Node node;
 
         public NodeService(
-            IBlockchainValidator chainValidator, ITransactionValidator transactionValidator)
+            IBlockGenerator blockGenerator,
+            IBlockchainValidator chainValidator, 
+            ITransactionValidator transactionValidator)
         {
             this.node = new Node(
                 "Outcrop",
                 new Uri("http://localhost:53633/"),
                 chainValidator,
                 transactionValidator);
+
+            this.node.ReceiveBlock(blockGenerator.GenerateBlock());
+        }
+
+        public Node GetNode()
+        {
+            return this.node;
         }
 
         public void RegisterAddress(RegisterUserModel model)
         {
-            this.node.RegisterAddress(new Address(model.Address), model.Balance);
+            this.node.RegisterAddress(model.Address, model.Balance);
         }
 
         public void ReceiveTransaction(TransactionModel model)
@@ -44,6 +53,11 @@ namespace WebNode.Code
             }
 
             throw new ArgumentException($"Invalid hash {hash}.");
+        }
+
+        public void ReceiveBlock(Block block)
+        {
+            this.node.ReceiveBlock(block);
         }
     }
 }

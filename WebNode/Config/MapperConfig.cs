@@ -10,8 +10,6 @@ namespace WebNode.Config
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Address, string>().ConvertUsing(s => s.Id ?? string.Empty);
-                cfg.CreateMap<string, Address>().ConstructUsing(s => new Address(s));
                 cfg.CreateMap<TransactionModel, Transaction>();
             });
         }
