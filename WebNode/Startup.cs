@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Models.Hashing;
 using Models.Validation;
 using WebNode.Code;
+using WebNode.Config;
 
 namespace WebNode
 {
@@ -24,6 +25,8 @@ namespace WebNode
             services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
             services.AddTransient<ITransactionValidator, TransactionValidator>();
+
+            MapperConfig.RegisterMappings();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
