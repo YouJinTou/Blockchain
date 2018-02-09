@@ -46,6 +46,8 @@ namespace Models
 
         public IDictionary<Address, decimal> Balances => this.balances;
 
+        public Block LastBlock => this.blockchain.Last?.Value;
+
         public void AddPeer(Node peer)
         {
             this.peers.Add(peer);
