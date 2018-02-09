@@ -1,17 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2003
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{C3448FD5-3C54-4077-AB6F-FCA6F41449D8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground", "Playground\Playground.csproj", "{B6E65BF3-0C67-4B57-9980-39DAACDA7027}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{2F4EBFB3-D53C-4BCF-AB42-F257D10413FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{2F4EBFB3-D53C-4BCF-AB42-F257D10413FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningClient", "MiningClient\MiningClient.csproj", "{EFACA059-9318-4BDF-9929-14B5666F80E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiningClient", "MiningClient\MiningClient.csproj", "{EFACA059-9318-4BDF-9929-14B5666F80E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebNode", "WebNode\WebNode.csproj", "{A02FA757-0BBE-4CFC-8A52-6615B407F682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebNode", "WebNode\WebNode.csproj", "{A02FA757-0BBE-4CFC-8A52-6615B407F682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secp256k1", "Secp256k1\Secp256k1.csproj", "{C9CAE86E-9E8A-483A-865A-BA2716C417A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A02FA757-0BBE-4CFC-8A52-6615B407F682}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02FA757-0BBE-4CFC-8A52-6615B407F682}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02FA757-0BBE-4CFC-8A52-6615B407F682}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
