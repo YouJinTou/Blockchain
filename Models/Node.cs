@@ -96,6 +96,14 @@ namespace Models
             }
         }
 
+        public void RegisterAddress(Address address, decimal balance)
+        {
+            if (balance >= 0.0m)
+            {
+                this.balances.Add(address, balance);
+            }
+        }
+
         private void TryUpdateChain()
         {
             while (true)
