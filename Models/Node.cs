@@ -111,6 +111,26 @@ namespace Models
             this.balances.Add(address, balance);
         }
 
+        public bool Equals(Node other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.networkAddress == other.networkAddress;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as Node);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.networkAddress.GetHashCode();
+        }
+
         private void TryUpdateChain()
         {
             while (true)
@@ -154,26 +174,6 @@ namespace Models
             {
                 peer.ReceiveBlock(block);
             }
-        }
-
-        public bool Equals(Node other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            return this.networkAddress == other.networkAddress;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return this.Equals(obj as Node);
-        }
-
-        public override int GetHashCode()
-        {
-            return this.networkAddress.GetHashCode();
         }
     }
 }

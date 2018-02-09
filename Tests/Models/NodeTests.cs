@@ -50,6 +50,17 @@ namespace Tests.Models
         }
 
         [TestCase]
+        public void ReceiveBlock_BroadcastBlock_PeerBlocksUpdated()
+        {
+            this.node1.AddPeer(this.node2);
+
+            this.node1.ReceiveBlock(this.genesisBlock);
+            this.node1.ReceiveBlock(this.block1);
+
+            Assert.That(this.node2.Blockchain.Count == 2);
+        }
+
+        [TestCase]
         public void AddPeer_InvalidChain_DoNothing()
         {
             this.node1.AddPeer(this.node2);
