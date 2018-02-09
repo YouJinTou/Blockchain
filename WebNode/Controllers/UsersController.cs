@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using WebNode.ApiModels.Users;
 using WebNode.Code;
 
@@ -13,7 +14,14 @@ namespace WebNode.Controllers
 
         public IActionResult Register([FromBody]RegisterUserModel model)
         {
-            this.NodeService.RegisterAddress(model);
+            try
+            {
+                this.NodeService.RegisterAddress(model);
+            }
+            catch (ArgumentException aex)
+            {
+                return BadRequest(aex.Message);
+            }
 
             return Ok();
         }
