@@ -1,12 +1,13 @@
 ﻿using Models.Validation;
 using WebNode.ApiModels.Users;
 using System;
+using Models;
 
 namespace WebNode.Code
 {
     public class NodeService : INodeService
     {
-        private Models.Node node;
+        private Node node;
 
         public NodeService(
             IBlockchainValidator chainValidator, ITransactionValidator transactionValidator)
@@ -20,6 +21,7 @@ namespace WebNode.Code
 
         public void RegisterAddress(RegisterUserModel model)
         {
+            this.node.RegisterAddress(new Address(model.Address), model.Balance);
         }
     }
 }

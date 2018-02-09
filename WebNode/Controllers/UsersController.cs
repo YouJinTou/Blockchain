@@ -11,9 +11,11 @@ namespace WebNode.Controllers
         {
         }
 
-        public IActionResult Register(RegisterUserModel model)
+        public IActionResult Register([FromBody]RegisterUserModel model)
         {
-            return null;
+            this.NodeService.RegisterAddress(model);
+
+            return Ok();
         }
     }
 }
