@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Tests.Models
 {
     [TestFixture]
-    public class BlockTests
+    public class NodeTests
     {
         private const uint Difficulty = 2;
 
