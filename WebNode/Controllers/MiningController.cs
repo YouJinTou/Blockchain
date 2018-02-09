@@ -5,6 +5,7 @@ using WebNode.Code;
 
 namespace WebNode.Controllers
 {
+    [Route("Mining")]
     public class MiningController : BaseController
     {
         public MiningController(INodeService nodeService)
