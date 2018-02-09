@@ -39,7 +39,8 @@ namespace WebNode
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute("default", "{controller}/{action}/{id?}", new { controller = "Home", action = "Index" });
+                routes.MapRoute("default", "{controller}/{action}/{id?}", 
+                    new { controller = "Home", action = "Index" });
             });
         }
     }

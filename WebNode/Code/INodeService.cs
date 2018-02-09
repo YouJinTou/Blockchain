@@ -1,4 +1,5 @@
 ﻿using Models;
+using WebNode.ApiModels.Nodes;
 using WebNode.ApiModels.Users;
 
 namespace WebNode.Code
@@ -6,6 +7,8 @@ namespace WebNode.Code
     public interface INodeService
     {
         Node GetNode();
+
+        void AddPeer(AddPeerModel model);
 
         void RegisterAddress(RegisterUserModel model);
 

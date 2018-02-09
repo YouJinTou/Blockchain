@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class Node
+    public class Node : IEquatable<Node>
     {
         private readonly object locker = new object();
 
@@ -29,7 +29,7 @@ namespace Models
         {
             this.name = name;
             this.networkAddress = networkAddress;
-            this.peers = new List<Node>();
+            this.peers = new HashSet<Node>();
             this.blockchain = new LinkedList<Block>();
             this.pendingTransactions = new List<Transaction>();
             this.miningJobs = new Dictionary<string, uint>();
@@ -61,6 +61,12 @@ namespace Models
 
         public void AddPeer(Node peer)
         {
+            if (this.peers.Contains(peer))
+            {
+                throw new ArgumentException(
+                    $"Peer with address {peer.networkAddress} already exists.");
+            }
+
             this.peers.Add(peer);
 
             if (this.chainValidator.ShouldUpdateChain(this, peer))
@@ -148,6 +154,26 @@ namespace Models
 
                 this.pendingTransactions.Remove(matchingTransaction);
             }
+        }
+
+        public bool Equals(Node other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.networkAddress == other.networkAddress;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.Equals(obj as Node);
+        }
+
+        public override int GetHashCode()
+        {
+            return this.networkAddress.GetHashCode();
         }
     }
 }

@@ -3,6 +3,7 @@ using WebNode.ApiModels.Users;
 using System;
 using Models;
 using AutoMapper;
+using WebNode.ApiModels.Nodes;
 
 namespace WebNode.Code
 {
@@ -27,6 +28,11 @@ namespace WebNode.Code
         public Node GetNode()
         {
             return this.node;
+        }
+
+        public void AddPeer(AddPeerModel model)
+        {
+            this.node.AddPeer(Mapper.Map<AddPeerModel, Node>(model));
         }
 
         public void RegisterAddress(RegisterUserModel model)
