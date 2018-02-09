@@ -17,6 +17,7 @@ namespace Models
         private IDictionary<Address, uint> miningJobs;
         private IDictionary<Address, decimal> balances;
         private IBlockchainValidator chainValidator;
+        private uint difficulty;
 
         public Node(string name, Uri networkAddress, IBlockchainValidator blockchainValidator)
         {
@@ -28,6 +29,7 @@ namespace Models
             this.miningJobs = new Dictionary<Address, uint>();
             this.balances = new Dictionary<Address, decimal>();
             this.chainValidator = blockchainValidator;
+            this.difficulty = 2;
 
             Task.Run(() => TryUpdateChain());
         }
@@ -47,6 +49,8 @@ namespace Models
         public IDictionary<Address, decimal> Balances => this.balances;
 
         public Block LastBlock => this.blockchain.Last?.Value;
+
+        public uint Difficulty => this.difficulty;
 
         public void AddPeer(Node peer)
         {
