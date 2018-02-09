@@ -21,6 +21,7 @@ namespace WebNode
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton<IBlockGenerator, GenesisBlockGenerator>();
             services.AddSingleton<INodeService, NodeService>();
             services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
