@@ -25,12 +25,10 @@ namespace Models.Validation
                 return false;
             }
 
-            if (currentTailBlock.Hash != newBlock.Hash)
-            {
-                return false;
-            }
+            var actualLeadingZeros = newBlock.Hash.Substring(0, (int)newBlock.Difficulty + 1);
+            var expectedLeadingZeros = new string('0', (int)newBlock.Difficulty);
 
-            return true;
+            return (actualLeadingZeros == expectedLeadingZeros);
         }
 
         private bool TransactionsExist(
