@@ -20,12 +20,10 @@ namespace Models.Validation
                 return false;
             }
 
-            if (thisPeer.Blockchain.Last.Value.Id < otherPeer.Blockchain.Last.Value.Id)
+            if (this.ShouldRequestChain(
+                thisPeer.Blockchain.Last?.Value, otherPeer.Blockchain.Last?.Value))
             {
-                if (this.PeerChainValid(thisPeer.Blockchain, otherPeer.Blockchain))
-                {
-                    return true;
-                }
+                return this.PeerChainValid(thisPeer.Blockchain, otherPeer.Blockchain);
             }
 
             return false;
@@ -33,9 +31,7 @@ namespace Models.Validation
 
         public bool BlockIsValid(Block currentTailBlock, Block newBlock)
         {
-            var isGenesisBlock = (currentTailBlock == null && newBlock != null);
-
-            if (isGenesisBlock)
+            if (this.IsGenesisBlock(currentTailBlock, newBlock))
             {
                 return this.GenesisBlockValid(newBlock);
             }
@@ -58,9 +54,24 @@ namespace Models.Validation
             return this.ProofOfWorkValid(newBlock);
         }
 
+        private bool ShouldRequestChain(Block currentTailBlock, Block newBlock)
+        {
+            if (currentTailBlock == null && newBlock != null)
+            {
+                return true;
+            }
+
+            return (currentTailBlock.Id < newBlock.Id);
+        }
+
         private bool PeerChainValid(LinkedList<Block> thisChain, LinkedList<Block> otherChain)
         {
-            if (otherChain.First.Value.Hash != thisChain.First.Value.Hash)
+            if (this.IsGenesisBlock(thisChain.First?.Value, otherChain.Last?.Value))
+            {
+                return true;
+            }
+
+            if (otherChain.First.Value.Hash != thisChain.First?.Value.Hash)
             {
                 return false;
             }
@@ -78,6 +89,11 @@ namespace Models.Validation
             }
 
             return true;
+        }
+
+        private bool IsGenesisBlock(Block currentTailBlock, Block newBlock)
+        {
+            return (currentTailBlock == null && newBlock != null);
         }
 
         private bool GenesisBlockValid(Block newBlock)
