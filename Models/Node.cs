@@ -98,7 +98,7 @@ namespace Models
 
         public void RegisterAddress(Address address, decimal balance)
         {
-            if (balance >= 0.0m)
+            if (balance >= 0.0m && !this.balances.ContainsKey(address))
             {
                 this.balances.Add(address, balance);
             }
