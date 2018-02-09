@@ -5,7 +5,6 @@ using WebNode.Code;
 
 namespace WebNode.Controllers
 {
-    [Route("Users")]
     public class UsersController : BaseController
     {
         public UsersController(INodeService nodeService)
@@ -13,7 +12,7 @@ namespace WebNode.Controllers
         {
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
         public IActionResult Register([FromBody]RegisterUserModel model)
         {
             try

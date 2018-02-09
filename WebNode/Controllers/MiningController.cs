@@ -5,7 +5,6 @@ using WebNode.Code;
 
 namespace WebNode.Controllers
 {
-    [Route("Mining")]
     public class MiningController : BaseController
     {
         public MiningController(INodeService nodeService)
@@ -25,7 +24,7 @@ namespace WebNode.Controllers
                 return BadRequest(aex.Message);
             }
 
-            return Ok("Block validated and added.");
+            return Ok();
         }
     }
 }
