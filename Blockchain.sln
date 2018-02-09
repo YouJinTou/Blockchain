@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebNode", "WebNode\WebNode.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Secp256k1", "Secp256k1\Secp256k1.csproj", "{C9CAE86E-9E8A-483A-865A-BA2716C417A0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebWallet", "WebWallet\WebWallet.csproj", "{9E52A9F4-C2EC-4705-A680-E5ED0F4ACFDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9CAE86E-9E8A-483A-865A-BA2716C417A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E52A9F4-C2EC-4705-A680-E5ED0F4ACFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E52A9F4-C2EC-4705-A680-E5ED0F4ACFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E52A9F4-C2EC-4705-A680-E5ED0F4ACFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E52A9F4-C2EC-4705-A680-E5ED0F4ACFDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
