@@ -1,5 +1,5 @@
 ﻿using Models.Hashing;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Models
 {
@@ -8,7 +8,6 @@ namespace Models
         private Address address;
         private Node node;
         private IHasher hasher;
-        private ICollection<Transaction> transactions;
 
         public Miner(Address address, Node node, IHasher hasher)
         {
@@ -23,9 +22,12 @@ namespace Models
 
             while (true)
             {
+                var newBlockId = this.node.LastBlock.Id + 1;
+                var transactions = this.node.PendingTransactions
+                    .Select(t => { t.BlockId = newBlockId; return t; });
                 var block = new Block(
-                    this.node.LastBlock.Id,
-                    this.node.PendingTransactions, 
+                    newBlockId,
+                    transactions, 
                     this.node.Difficulty, 
                     this.node.LastBlock.Hash, 
                     this.address, 
