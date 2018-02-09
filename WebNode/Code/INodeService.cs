@@ -1,4 +1,5 @@
-﻿using WebNode.ApiModels.Users;
+﻿using Models;
+using WebNode.ApiModels.Users;
 
 namespace WebNode.Code
 {
@@ -7,5 +8,7 @@ namespace WebNode.Code
         void RegisterAddress(RegisterUserModel model);
 
         void ReceiveTransaction(TransactionModel model);
+
+        Transaction GetTransaction(string hash);
     }
 }

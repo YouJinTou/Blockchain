@@ -29,5 +29,21 @@ namespace WebNode.Code
         {
             this.node.ReceiveTransaction(Mapper.Map<TransactionModel, Transaction>(model));
         }
+
+        public Transaction GetTransaction(string hash)
+        {
+            foreach (var block in this.node.Blockchain)
+            {
+                foreach (var transaction in block.Transactions)
+                {
+                    if (transaction.Hash.Equals(hash))
+                    {
+                        return transaction;
+                    }
+                }
+            }
+
+            throw new ArgumentException($"Invalid hash {hash}.");
+        }
     }
 }

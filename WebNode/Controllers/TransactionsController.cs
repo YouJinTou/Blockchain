@@ -12,6 +12,19 @@ namespace WebNode.Controllers
         {
         }
 
+        [HttpGet("{hash}")]
+        public IActionResult Get(string hash)
+        {
+            try
+            {
+                return new JsonResult(this.NodeService.GetTransaction(hash));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost]
         public IActionResult New([FromBody]TransactionModel model)
         {
