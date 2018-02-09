@@ -1,0 +1,28 @@
+﻿@model CreateWalletViewModel
+
+@{
+    ViewData["Title"] = "Create Wallet";
+}
+
+<h1>Create Wallet</h1>
+
+<form asp-controller="Wallet" asp-action="CreateWallet" asp-antiforgery="true" method="post">
+    <label asp-for="Password"></label> 
+    <input asp-for="Password" class="form-control" />
+
+    <input type="submit" value="Create" class="btn btn-default" />
+</form>
+
+<div class="row">
+    <div class="col-xs-12">
+        <label asp-for="PrivateKey"></label>
+        <input asp-for="PrivateKey" class="form-control" readonly="readonly" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" readonly="readonly" />
+    </div>
+</div>
