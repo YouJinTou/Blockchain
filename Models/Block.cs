@@ -59,7 +59,7 @@ namespace Models
             sb.Append(this.difficulty.ToString());
             sb.Append(this.id.ToString());
             sb.Append(this.minedBy.ToString());
-            sb.Append(this.minedOn.Ticks.ToString());
+            //sb.Append(this.minedOn.Ticks.ToString());
             sb.Append(this.nonce.ToString());
             sb.Append(this.previousHash.ToString());
 

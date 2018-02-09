@@ -51,7 +51,7 @@ namespace Models
             sb.Append(this.to.ToString());
             sb.Append(this.amount.ToString());
             sb.Append(this.signature.ToString());
-            sb.Append(this.createdOn.Ticks.ToString());
+            //sb.Append(this.createdOn.Ticks.ToString());
 
             return sb.ToString();
         }
