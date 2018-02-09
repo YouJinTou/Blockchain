@@ -13,9 +13,9 @@ namespace Models
         private ICollection<Transaction> pendingTransactions;
         private IDictionary<Address, uint> miningJobs;
         private IDictionary<Address, decimal> balances;
-        private IBlockValidator blockValidator;
+        private IBlockchainValidator blockchainValidator;
 
-        public Node(string name, Uri networkAddress, IBlockValidator blockValidator)
+        public Node(string name, Uri networkAddress, IBlockchainValidator blockchainValidator)
         {
             this.name = name;
             this.networkAddress = networkAddress;
@@ -24,7 +24,7 @@ namespace Models
             this.pendingTransactions = new List<Transaction>();
             this.miningJobs = new Dictionary<Address, uint>();
             this.balances = new Dictionary<Address, decimal>();
-            this.blockValidator = blockValidator;
+            this.blockchainValidator = blockchainValidator;
         }
 
         public string Name => this.name;
@@ -44,6 +44,11 @@ namespace Models
         public void AddPeer(Node peer)
         {
             this.peers.Add(peer);
+
+            if (this.blockchainValidator.ShouldUpdateChain(this, peer))
+            {
+                this.blockchain = peer.Blockchain;
+            }
         }
 
         public void BroadcastBlock(Block block)
@@ -56,16 +61,14 @@ namespace Models
 
         public void ReceiveBlock(Block block)
         {
-            if (!this.BlockIsValid(block))
+            if (!this.blockchainValidator.BlockIsValid(this.blockchain.Last.Value, block))
             {
                 return;
             }
-        }
 
-        private bool BlockIsValid(Block block)
-        {
-            return this.blockValidator.BlockIsValid(
-                this.pendingTransactions, this.blockchain.Last.Value, block);
+            this.blockchain.AddLast(block);
+
+            this.BroadcastBlock(block);
         }
     }
 }
