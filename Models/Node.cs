@@ -90,10 +90,9 @@ namespace Models
 
         public void ReceiveTransaction(Transaction transaction)
         {
-            if (this.transactionValidator.TransactionIsValid(transaction, this.balances))
-            {
-                this.pendingTransactions.Add(transaction);
-            }
+            this.transactionValidator.ValidateTransaction(transaction, this.balances);
+
+            this.pendingTransactions.Add(transaction);
         }
 
         public void RegisterAddress(Address address, decimal balance)

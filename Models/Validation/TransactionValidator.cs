@@ -1,4 +1,5 @@
 ﻿using Models.Hashing;
+using System;
 using System.Collections.Generic;
 
 namespace Models.Validation
@@ -12,25 +13,35 @@ namespace Models.Validation
             this.hasher = hasher;
         }
 
-        public bool TransactionIsValid(
+        public void ValidateTransaction(
             Transaction transaction, IDictionary<Address, decimal> balances)
         {
+            if (!balances.ContainsKey(transaction.From))
+            {
+                throw new ArgumentException($"Invalid sender {transaction.From.Id}.");
+            }
+
+            if (!balances.ContainsKey(transaction.To))
+            {
+                throw new ArgumentException($"Invalid recipient {transaction.To.Id}.");
+            }
+
             if (transaction.Amount <= 0.0m)
             {
-                return false;
+                throw new ArgumentException($"Invalid amount. Must be positive.");
             }
 
             if (transaction.ToString() != this.hasher.GetHash(transaction.GetMetadataString()))
             {
-                return false;
+                throw new ArgumentException($"Invalid transaction hash.");
             }
 
             if (balances[transaction.From] < transaction.Amount)
             {
-                return false;
+                throw new ArgumentException(
+                    $"Tried to send {transaction.Amount}, but {transaction.From} " +
+                    $"only has {balances[transaction.From]}.");
             }
-
-            return true;
         }
     }
 }

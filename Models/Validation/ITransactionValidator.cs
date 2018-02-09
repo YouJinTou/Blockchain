@@ -4,7 +4,7 @@ namespace Models.Validation
 {
     public interface ITransactionValidator
     {
-        bool TransactionIsValid(
+        void ValidateTransaction(
             Transaction transaction, IDictionary<Address, decimal> balances);
     }
 }
