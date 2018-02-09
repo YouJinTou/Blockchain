@@ -4,7 +4,6 @@ using Models.Validation;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Tests.Models
@@ -23,9 +22,10 @@ namespace Tests.Models
         [SetUp]
         public void SetupTest()
         {
-            var validator = new BlockchainValidator(new Sha256Hasher());
-            this.node1 = new Node("Node 1", new Uri("http://127.0.1.1"), validator);
-            this.node2 = new Node("Node 2", new Uri("http://127.0.1.2"), validator);
+            var chainValidator = new BlockchainValidator(new Sha256Hasher());
+            var txValidator = new TransactionValidator(new Sha256Hasher());
+            this.node1 = new Node("Node 1", new Uri("http://127.0.1.1"), chainValidator, txValidator);
+            this.node2 = new Node("Node 2", new Uri("http://127.0.1.2"), chainValidator, txValidator);
             this.minerAddress = new Address("miner-address");
             this.genesisBlock = new Block(
                 0, new List<Transaction>(), Difficulty, string.Empty, minerAddress, 0);

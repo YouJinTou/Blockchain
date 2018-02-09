@@ -17,9 +17,14 @@ namespace Models
         private IDictionary<Address, uint> miningJobs;
         private IDictionary<Address, decimal> balances;
         private IBlockchainValidator chainValidator;
+        private ITransactionValidator transactionValidator;
         private uint difficulty;
 
-        public Node(string name, Uri networkAddress, IBlockchainValidator blockchainValidator)
+        public Node(
+            string name, 
+            Uri networkAddress, 
+            IBlockchainValidator blockchainValidator, 
+            ITransactionValidator transactionValidator)
         {
             this.name = name;
             this.networkAddress = networkAddress;
@@ -29,6 +34,7 @@ namespace Models
             this.miningJobs = new Dictionary<Address, uint>();
             this.balances = new Dictionary<Address, decimal>();
             this.chainValidator = blockchainValidator;
+            this.transactionValidator = transactionValidator;
             this.difficulty = 2;
 
             Task.Run(() => TryUpdateChain());
@@ -80,6 +86,14 @@ namespace Models
             this.blockchain.AddLast(block);
 
             this.BroadcastBlock(block);
+        }
+
+        public void ReceiveTransaction(Transaction transaction)
+        {
+            if (this.transactionValidator.TransactionIsValid(transaction, this.balances))
+            {
+                this.pendingTransactions.Add(transaction);
+            }
         }
 
         private void TryUpdateChain()
