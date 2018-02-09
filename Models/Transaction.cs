@@ -44,12 +44,7 @@ namespace Models
 
         public string Hash => this.hash;
 
-        private void CalculateHash(IHasher hasher)
-        {
-            this.hash = hasher.GetHash(this.GetMetadataString());
-        }
-
-        private string GetMetadataString()
+        public string GetMetadataString()
         {
             var sb = new StringBuilder();
 
@@ -66,6 +61,11 @@ namespace Models
         public override string ToString()
         {
             return this.hash;
+        }
+
+        private void CalculateHash(IHasher hasher)
+        {
+            this.hash = hasher.GetHash(this.GetMetadataString());
         }
     }
 }
