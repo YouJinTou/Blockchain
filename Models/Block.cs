@@ -57,7 +57,7 @@ namespace Models
             this.hash = hasher.GetHash(this.GetMetadataString());
         }
 
-        private string GetMetadataString()
+        public string GetMetadataString()
         {
             var sb = new StringBuilder();
 

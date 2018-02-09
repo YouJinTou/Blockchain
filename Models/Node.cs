@@ -61,7 +61,7 @@ namespace Models
 
         public void ReceiveBlock(Block block)
         {
-            if (!this.blockchainValidator.BlockIsValid(this.blockchain.Last.Value, block))
+            if (!this.blockchainValidator.BlockIsValid(this.blockchain.Last?.Value, block))
             {
                 return;
             }

@@ -1,13 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using Models.Hashing;
+using System.Collections.Generic;
 
 namespace Models.Validation
 {
     public class BlockchainValidator : IBlockchainValidator
     {
+        private IHasher hasher;
+
+        public BlockchainValidator(IHasher hasher)
+        {
+            this.hasher = hasher;
+        }
+
         public bool ShouldUpdateChain(Node thisPeer, Node otherPeer)
         {
             if (!this.BlockIsValid(
-                thisPeer.Blockchain.Last.Value, otherPeer.Blockchain.Last.Value))
+                thisPeer.Blockchain.Last?.Value, otherPeer.Blockchain.Last?.Value))
             {
                 return false;
             }
@@ -25,6 +33,18 @@ namespace Models.Validation
 
         public bool BlockIsValid(Block currentTailBlock, Block newBlock)
         {
+            var isGenesisBlock = (currentTailBlock == null && newBlock != null);
+
+            if (isGenesisBlock)
+            {
+                return this.GenesisBlockValid(newBlock);
+            }
+
+            if (newBlock == null)
+            {
+                return false;
+            }
+
             if (currentTailBlock.Id >= newBlock.Id)
             {
                 return false;
@@ -35,10 +55,7 @@ namespace Models.Validation
                 return false;
             }
 
-            var actualLeadingZeros = newBlock.Hash.Substring(0, (int)newBlock.Difficulty + 1);
-            var expectedLeadingZeros = new string('0', (int)newBlock.Difficulty);
-
-            return (actualLeadingZeros == expectedLeadingZeros);
+            return this.ProofOfWorkValid(newBlock);
         }
 
         private bool PeerChainValid(LinkedList<Block> thisChain, LinkedList<Block> otherChain)
@@ -61,6 +78,19 @@ namespace Models.Validation
             }
 
             return true;
+        }
+
+        private bool GenesisBlockValid(Block newBlock)
+        {
+            return (this.hasher.GetHash(newBlock.GetMetadataString()) == newBlock.Hash);
+        }
+
+        private bool ProofOfWorkValid(Block newBlock)
+        {
+            var actualLeadingString = newBlock.Hash.Substring(0, (int)newBlock.Difficulty);
+            var expectedLeadingString = new string('0', (int)newBlock.Difficulty);
+
+            return actualLeadingString.Equals(expectedLeadingString);
         }
     }
 }
