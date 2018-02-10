@@ -14,11 +14,12 @@ namespace Models
         private string publicKey;
         private Secp256k1.ECPoint publicKeyPair;
         private string address;
-        private decimal amount;
 
         public Wallet(string password)
         {
             this.GeneratePrivateKey(password);
+
+            this.GeneratePublicKey();
 
             this.GenerateAddress();
         }
@@ -28,8 +29,6 @@ namespace Models
         public string PublicKey => this.publicKey;
 
         public string Address => this.address;
-
-        public decimal Amount => this.amount;
 
         private void GeneratePrivateKey(string password)
         {
@@ -63,7 +62,7 @@ namespace Models
 
         private string CompressEcPoint(Secp256k1.ECPoint point)
         {
-            return point.X.ToString("16") + Convert.ToInt32(!point.X.TestBit(0));
+            return point.X.ToString("x2") + Convert.ToInt32(!point.X.TestBit(0));
         }
     }
 }
