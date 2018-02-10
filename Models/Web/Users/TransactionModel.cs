@@ -1,4 +1,4 @@
-﻿namespace WebNode.ApiModels.Users
+﻿namespace Models.Web.Users
 {
     public class TransactionModel
     {

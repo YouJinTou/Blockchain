@@ -1,11 +1,12 @@
 ﻿using Models.Validation;
-using WebNode.ApiModels.Users;
 using System;
 using Models;
+using Models.Web.Nodes;
+using Models.Web.Users;
+using Services.Generation;
 using AutoMapper;
-using WebNode.ApiModels.Nodes;
 
-namespace WebNode.Code
+namespace Services.Nodes
 {
     public class NodeService : INodeService
     {

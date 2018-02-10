@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebNode.ApiModels.Nodes
+namespace Models.Web.Nodes
 {
     public class AddPeerModel
     {

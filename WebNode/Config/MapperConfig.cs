@@ -2,8 +2,8 @@
 using Models;
 using Models.Hashing;
 using Models.Validation;
-using WebNode.ApiModels.Nodes;
-using WebNode.ApiModels.Users;
+using Models.Web.Nodes;
+using Models.Web.Users;
 
 namespace WebNode.Config
 {

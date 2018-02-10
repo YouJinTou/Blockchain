@@ -1,8 +1,8 @@
 ﻿using Models;
-using WebNode.ApiModels.Nodes;
-using WebNode.ApiModels.Users;
+using Models.Web.Nodes;
+using Models.Web.Users;
 
-namespace WebNode.Code
+namespace Services.Nodes
 {
     public interface INodeService
     {

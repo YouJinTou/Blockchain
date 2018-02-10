@@ -1,7 +1,7 @@
 ﻿using Models;
 using System.Collections.Generic;
 
-namespace WebNode.Code
+namespace Services.Generation
 {
     public class GenesisBlockGenerator : IBlockGenerator
     {

@@ -1,6 +1,6 @@
 ﻿using Models;
 
-namespace WebNode.Code
+namespace Services.Generation
 {
     public interface IBlockGenerator
     {
