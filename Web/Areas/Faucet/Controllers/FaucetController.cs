@@ -41,7 +41,7 @@ namespace Web.Areas.Faucet.Controllers
                 this.faucetService.SendFunds(
                     Mapper.Map<FaucetSendViewModel, FaucetSendModel>(model));
 
-                return View("Create", model);
+                return View("Index");
             }
             catch (Exception ex)
             {
