@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services.Nodes;
 using Services.Wallets;
 using WebNode.Config;
 
@@ -19,6 +20,7 @@ namespace WebWallet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<INodeService, NodeService>();
             services.AddTransient<IWalletService, WalletService>();
 
             MapperConfig.RegisterMappings();
