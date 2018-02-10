@@ -3,6 +3,7 @@ using Services.Nodes;
 
 namespace Web.Controllers
 {
+    [Area("Node")]
     public class BaseController : ControllerBase
     {
         private INodeService nodeService;

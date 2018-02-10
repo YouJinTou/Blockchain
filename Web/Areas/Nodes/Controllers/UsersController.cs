@@ -5,7 +5,7 @@ using System;
 
 namespace Web.Controllers
 {
-    [Route("Users")]
+    [Route("[area]/[controller]")]
     public class UsersController : BaseController
     {
         public UsersController(INodeService nodeService)
@@ -13,7 +13,8 @@ namespace Web.Controllers
         {
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
+        [Route("[action]")]
         public IActionResult Register([FromBody]RegisterUserModel model)
         {
             try

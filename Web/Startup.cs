@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Hashing;
+using Models.Validation;
+using Services.Generation;
+using Services.Nodes;
+using Services.Wallets;
+using Web.Config;
 
 namespace Web
 {
@@ -18,13 +20,19 @@ namespace Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddSingleton<INodeService, NodeService>();
+            services.AddTransient<IHasher, Sha256Hasher>();
+            services.AddTransient<IBlockchainValidator, BlockchainValidator>();
+            services.AddTransient<ITransactionValidator, TransactionValidator>();
+            services.AddTransient<IBlockGenerator, GenesisBlockGenerator>();
+            services.AddTransient<IWalletService, WalletService>();
+
+            MapperConfig.RegisterMappings();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -44,6 +52,12 @@ namespace Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "walletsRoute",
+                    template: "Wallets/{controller=Wallets}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "nodesRoute",
+                    template: "Node/{controller=Node}/{action=Get}/{id?}");
             });
         }
     }

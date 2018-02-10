@@ -5,6 +5,7 @@ using System;
 
 namespace Web.Controllers
 {
+    [Route("[area]/[controller]")]
     public class TransactionsController : BaseController
     {
         public TransactionsController(INodeService nodeService)
@@ -12,7 +13,8 @@ namespace Web.Controllers
         {
         }
 
-        [HttpGet("{hash}")]
+        [HttpGet]
+        [Route("{hash}")]
         public IActionResult Get(string hash)
         {
             try
@@ -26,6 +28,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
+        [Route("[action]")]
         public IActionResult New([FromBody]TransactionModel model)
         {
             try

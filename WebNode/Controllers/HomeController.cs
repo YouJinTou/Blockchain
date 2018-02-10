@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Nodes;
 
-namespace WebNode.Controllers
+namespace Web.Controllers
 {
     public class HomeController : BaseController
     {

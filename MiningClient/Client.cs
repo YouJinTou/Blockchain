@@ -43,7 +43,7 @@ namespace MiningClient
         public static void SendBlock(Block block)
         {
             var content = new StringContent(JsonConvert.SerializeObject(block), Encoding.UTF8, "application/json");
-            var response = client.PostAsync(new Uri("http://localhost:60000/mining/receive"), content).Result;
+            var response = client.PostAsync(new Uri("http://localhost:60000/node/mining/receive"), content).Result;
             var responseString = response.Content.ReadAsStringAsync().Result;
 
             Console.WriteLine(responseString);

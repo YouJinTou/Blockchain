@@ -5,7 +5,7 @@ using System;
 
 namespace Web.Controllers
 {
-    [Route("Mining")]
+    [Route("[area]/[controller]")]
     public class MiningController : BaseController
     {
         public MiningController(INodeService nodeService)
@@ -13,7 +13,8 @@ namespace Web.Controllers
         {
         }
 
-        [HttpPost("Receive")]
+        [HttpPost]
+        [Route("Receive")]
         public IActionResult ReceiveBlock([FromBody]Block block)
         {
             try

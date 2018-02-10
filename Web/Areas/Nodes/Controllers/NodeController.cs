@@ -5,7 +5,7 @@ using System;
 
 namespace Web.Controllers
 {
-    [Route("Node")]
+    [Route("[area]")]
     public class NodeController : BaseController
     {
         public NodeController(INodeService nodeService)
@@ -13,13 +13,15 @@ namespace Web.Controllers
         {
         }
 
-        [HttpGet("")]
+        [HttpGet]
+        [Route("")]
         public IActionResult Get()
         {
             return new JsonResult(this.NodeService.GetNode());
         }
 
-        [HttpPost("Peers/Add")]
+        [HttpPost]
+        [Route("Peers/Add")]
         public IActionResult AddPeer([FromBody]AddPeerModel model)
         {
             try

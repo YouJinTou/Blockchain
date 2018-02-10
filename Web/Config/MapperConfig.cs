@@ -4,6 +4,8 @@ using Models.Hashing;
 using Models.Validation;
 using Models.Web.Nodes;
 using Models.Web.Users;
+using Services.Wallets;
+using Web.Models;
 
 namespace Web.Config
 {
@@ -16,12 +18,13 @@ namespace Web.Config
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<TransactionModel, Transaction>();
+                cfg.CreateMap<WalletCredentials, CreateWalletViewModel>();
                 cfg.CreateMap<AddPeerModel, Node>()
-                    .ConstructUsing(apm => 
+                    .ConstructUsing(apm =>
                         new Node(
-                            apm.Name, 
-                            apm.NetworkAddress, 
-                            new BlockchainValidator(hasher), 
+                            apm.Name,
+                            apm.NetworkAddress,
+                            new BlockchainValidator(hasher),
                             new TransactionValidator(hasher)));
             });
         }

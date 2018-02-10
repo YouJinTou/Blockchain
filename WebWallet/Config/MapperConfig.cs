@@ -2,7 +2,7 @@
 using Services.Wallets;
 using WebWallet.Models;
 
-namespace WebNode.Config
+namespace Web.Config
 {
     public class MapperConfig
     {
