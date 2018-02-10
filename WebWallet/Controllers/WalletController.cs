@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Wallets;
+using System;
 using WebWallet.Models;
 
 namespace WebWallet.Controllers
@@ -28,7 +29,18 @@ namespace WebWallet.Controllers
         [HttpPost]
         public IActionResult CreateWallet([FromForm]CreateWalletViewModel model)
         {
-            return RedirectToAction("Create", this.walletService.CreateWallet(model.Password));
+            var credentials = new WalletCredentials();
+
+            try
+            {
+                credentials = this.walletService.CreateWallet(model.Password);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
+            return RedirectToAction("Create", credentials);
         }
     }
 }

@@ -6,6 +6,8 @@
 
 <h1>Create Wallet</h1>
 
+<div asp-validation-summary="All" class="text-danger"></div>
+
 <form asp-controller="Wallet" asp-action="CreateWallet" asp-antiforgery="true" method="post">
     <label asp-for="Password"></label> 
     <input asp-for="Password" class="form-control" />
