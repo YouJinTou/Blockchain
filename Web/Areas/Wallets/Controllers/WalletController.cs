@@ -42,19 +42,17 @@ namespace Web.Controllers
         [Route("[action]")]
         public IActionResult CreateWallet([FromForm]CreateWalletViewModel bindingModel)
         {
-            var model = new CreateWalletViewModel();
-
             try
             {
-                model = Mapper.Map<WalletCredentials, CreateWalletViewModel>(
+                var model = Mapper.Map<WalletCredentials, CreateWalletViewModel>(
                     this.walletService.CreateWallet(bindingModel.Password));
+
+                return View("Create", model);
             }
             catch (Exception ex)
             {
                 return RedirectToAction("Create", new { ex.Message });
             }
-
-            return View("Create", model);
         }
 
         [HttpGet]
