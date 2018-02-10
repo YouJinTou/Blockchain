@@ -11,7 +11,7 @@ namespace Web.Areas.Wallets.Models
         public string To { get; set; }
 
         [Required]
-        [Range(0.0d, double.MaxValue, ErrorMessage = "Invalid amount.")]
+        [Range(0.01d, double.MaxValue, ErrorMessage = "Invalid amount.")]
         public string Amount { get; set; }
 
         [Required]

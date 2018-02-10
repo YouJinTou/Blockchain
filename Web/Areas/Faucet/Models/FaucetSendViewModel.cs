@@ -10,7 +10,7 @@ namespace Web.Areas.Faucet.Models
         public string To { get; set; }
 
         [Required]
-        [Range(0.01, double.MaxValue, ErrorMessage = "Invalid amount.")]
+        [Range(0.01d, double.MaxValue, ErrorMessage = "Invalid amount.")]
         public decimal Amount { get; set; }
     }
 }
