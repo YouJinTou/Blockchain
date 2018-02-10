@@ -26,21 +26,5 @@ namespace Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult New([FromBody]TransactionModel model)
-        {
-            try
-            {
-                this.NodeService.ReceiveTransaction(model);
-            }
-            catch (ArgumentException aex)
-            {
-                return BadRequest(aex.Message);
-            }
-
-            return Ok();
-        }
     }
 }
