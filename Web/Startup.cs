@@ -61,6 +61,9 @@ namespace Web
                 routes.MapRoute(
                     name: "nodesRoute",
                     template: "Node/{controller=Node}/{action=Get}/{id?}");
+                routes.MapRoute(
+                    name: "faucetRoute",
+                    template: "Faucet/{controller=Faucet}/{action=Index}/{id?}");
             });
         }
     }
