@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Explorer\Models\" />
     <Folder Include="Areas\Explorer\Views\Shared\DisplayTemplates\" />
   </ItemGroup>
 
