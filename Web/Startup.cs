@@ -6,6 +6,7 @@ using Models.Hashing;
 using Models.Validation;
 using Models.Web.Settings;
 using Services.Cryptography;
+using Services.Faucet;
 using Services.Generation;
 using Services.Nodes;
 using Services.Wallets;
@@ -33,6 +34,7 @@ namespace Web
             services.AddTransient<IWalletService, WalletService>();
             services.AddTransient<ITransactionSecurityService, TransactionSecurityService>();
             services.AddTransient<IMessageSignerVerifier, MessageSignerVerifier>();
+            services.AddTransient<IFaucetService, FaucetService>();
 
             services.Configure<FaucetSettings>(this.Configuration.GetSection("Faucet"));
 
