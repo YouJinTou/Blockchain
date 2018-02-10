@@ -25,7 +25,8 @@ namespace Services.Wallets
             var credentials = new WalletCredentials
             {
                 Address = wallet.Address,
-                PrivateKey = wallet.PrivateKey
+                PrivateKey = wallet.PrivateKey,
+                PublicKey = wallet.PublicKey
             };
 
             this.nodeService.RegisterAddress(

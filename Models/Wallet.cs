@@ -1,5 +1,6 @@
 ﻿using Secp256k1;
 using System;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,6 +11,8 @@ namespace Models
         private const string CoinSeed = "Coin seed";
 
         private string privateKey;
+        private string publicKey;
+        private Secp256k1.ECPoint publicKeyPair;
         private string address;
         private decimal amount;
 
@@ -21,6 +24,8 @@ namespace Models
         }
 
         public string PrivateKey => this.privateKey;
+
+        public string PublicKey => this.publicKey;
 
         public string Address => this.address;
 
@@ -44,11 +49,21 @@ namespace Models
             this.privateKey = hashBuilder.ToString();
         }
 
-        private void GenerateAddress()
+        private void GeneratePublicKey()
         {
             var privateKey = Hex.HexToBigInteger(this.privateKey);
-            var publicKey = Secp256k1.Secp256k1.G.Multiply(privateKey);
-            this.address = publicKey.GetBitcoinAddress(false);
+            this.publicKeyPair = Secp256k1.Secp256k1.G.Multiply(privateKey);
+            this.publicKey = this.CompressEcPoint(publicKeyPair);
+        }
+
+        private void GenerateAddress()
+        {
+            this.address = this.publicKeyPair.GetBitcoinAddress(false);
+        }
+
+        private string CompressEcPoint(Secp256k1.ECPoint point)
+        {
+            return point.X.ToString("16") + Convert.ToInt32(!point.X.TestBit(0));
         }
     }
 }
