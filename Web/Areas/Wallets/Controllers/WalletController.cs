@@ -67,7 +67,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Route("[{address}")]
+        [Route("{address}")]
         [ValidateAntiForgeryToken]
         public IActionResult Address(string address)
         {
@@ -88,7 +88,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult Send([FromForm]SendTransactionViewModel model)
+        public IActionResult SendTransaction([FromForm]SendTransactionViewModel model)
         {
             try
             {
@@ -97,10 +97,10 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Send", new { ex.Message });
+                return RedirectToAction("Send", new { message = ex.Message });
             }
 
-            return View("Send", new { message = "Successfully sent transaction." });
+            return RedirectToAction("Send", new { message = "Successfully sent transaction." });
         }
     }
 }
