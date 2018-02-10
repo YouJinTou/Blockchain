@@ -18,6 +18,8 @@ namespace Services.Nodes
 
         void ReceiveBlock(Block block);
 
+        decimal GetAddressBalance(string address);
+
         AddressHistory GetAddressHistory(string address);
 
         void ReceiveTransaction(Transaction model, SignedMessage signature);

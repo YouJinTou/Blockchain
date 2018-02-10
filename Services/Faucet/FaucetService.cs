@@ -24,6 +24,11 @@ namespace Services.Faucet
             this.settings = settings;
         }
 
+        public decimal GetBalance()
+        {
+            return this.nodeService.GetAddressBalance(this.settings.Value.Address);
+        }
+
         public void SendFunds(FaucetSendModel model)
         {
             model.From = this.settings.Value.Address;

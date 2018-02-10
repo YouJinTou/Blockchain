@@ -4,6 +4,8 @@ namespace Services.Faucet
 {
     public interface IFaucetService
     {
+        decimal GetBalance();
+
         void SendFunds(FaucetSendModel model);
     }
 }

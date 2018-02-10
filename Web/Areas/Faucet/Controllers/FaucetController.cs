@@ -26,9 +26,10 @@ namespace Web.Areas.Faucet.Controllers
         [HttpGet]
         public IActionResult Index(string message)
         {
+            var model = new FaucetSendViewModel {Balance = this.faucetService.GetBalance() };
             ViewBag.Message = message;
 
-            return View(new FaucetSendViewModel());
+            return View(model);
         }
 
         [HttpPost]
@@ -41,7 +42,7 @@ namespace Web.Areas.Faucet.Controllers
                 this.faucetService.SendFunds(
                     Mapper.Map<FaucetSendViewModel, FaucetSendModel>(model));
 
-                return View("Index");
+                return RedirectToAction("Index", new { message = "Transaction successful." });
             }
             catch (Exception ex)
             {

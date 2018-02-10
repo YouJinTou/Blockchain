@@ -10,7 +10,6 @@ using System.Linq;
 using Secp256k1;
 using Microsoft.Extensions.Options;
 using Models.Web.Settings;
-using System.Collections.Generic;
 
 namespace Services.Nodes
 {
@@ -77,6 +76,16 @@ namespace Services.Nodes
         public void ReceiveBlock(Block block)
         {
             this.node.ReceiveBlock(block);
+        }
+
+        public decimal GetAddressBalance(string address)
+        {
+            if (!this.node.Balances.ContainsKey(address))
+            {
+                throw new ArgumentException($"Invalid address {address}");
+            }
+
+            return this.node.Balances[address];
         }
 
         public AddressHistory GetAddressHistory(string address)
