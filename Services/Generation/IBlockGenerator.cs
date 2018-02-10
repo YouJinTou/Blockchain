@@ -1,9 +1,10 @@
 ﻿using Models;
+using System.Collections.Generic;
 
 namespace Services.Generation
 {
     public interface IBlockGenerator
     {
-        Block GenerateBlock();
+        Block GenerateBlock(ICollection<Transaction> transactions);
     }
 }

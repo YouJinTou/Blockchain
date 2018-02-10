@@ -8,6 +8,9 @@ using AutoMapper;
 using Models.Web.Wallets;
 using System.Linq;
 using Secp256k1;
+using Microsoft.Extensions.Options;
+using Models.Web.Settings;
+using System.Collections.Generic;
 
 namespace Services.Nodes
 {
@@ -18,15 +21,27 @@ namespace Services.Nodes
         public NodeService(
             IBlockGenerator blockGenerator,
             IBlockchainValidator chainValidator, 
-            ITransactionValidator transactionValidator)
+            ITransactionValidator transactionValidator,
+            IOptions<FaucetSettings> faucetSettings)
         {
             this.node = new Node(
                 "Outcrop",
                 new Uri("http://localhost:53633/"),
                 chainValidator,
                 transactionValidator);
+            var transactions = new List<Transaction>
+            {
+                new Transaction(
+                    faucetSettings.Value.Address, 
+                    faucetSettings.Value.Address, 
+                    faucetSettings.Value.Balance, 
+                    faucetSettings.Value.PublicKey, 
+                    null)
+            };
 
-            this.node.ReceiveBlock(blockGenerator.GenerateBlock());
+            this.node.RegisterAddress(faucetSettings.Value.Address, faucetSettings.Value.Balance);
+
+            this.node.ReceiveBlock(blockGenerator.GenerateBlock(transactions));
         }
 
         public Node GetNode()
