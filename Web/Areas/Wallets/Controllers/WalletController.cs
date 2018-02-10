@@ -37,6 +37,7 @@ namespace Web.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Route("[action]")]
         public IActionResult CreateWallet([FromForm]CreateWalletViewModel model)
         {
             var credentials = new WalletCredentials();
@@ -66,7 +67,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        [Route("{address}")]
+        [Route("[{address}")]
         [ValidateAntiForgeryToken]
         public IActionResult Address(string address)
         {
@@ -78,9 +79,28 @@ namespace Web.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult Send()
+        public IActionResult Send(string message = null)
         {
+            ViewBag.Message = message;
+
             return View();
+        }
+
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult Send([FromForm]SendTransactionViewModel model)
+        {
+            try
+            {
+                this.walletService.SendTransaction(Mapper.Map
+                    <SendTransactionViewModel, SendTransactionModel>(model));
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Send", new { ex.Message });
+            }
+
+            return View("Send", new { message = "Successfully sent transaction." });
         }
     }
 }
