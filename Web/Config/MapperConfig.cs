@@ -19,6 +19,7 @@ namespace Web.Config
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<TransactionModel, Transaction>();
+                cfg.CreateMap<SendTransactionViewModel, SendTransactionModel>();
                 cfg.CreateMap<WalletCredentials, CreateWalletViewModel>();
                 cfg.CreateMap<Transaction, TransactionViewModel>();
                 cfg.CreateMap<AddressHistory, AddressHistoryViewModel>();
