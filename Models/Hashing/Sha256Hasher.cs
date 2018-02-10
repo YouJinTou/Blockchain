@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Models.Hashing
@@ -10,14 +11,8 @@ namespace Models.Hashing
             var metadataBytes = Encoding.Unicode.GetBytes(seed);
             var hasher = new SHA256Managed();
             var hashBytes = hasher.ComputeHash(metadataBytes);
-            var hashBuilder = new StringBuilder();
 
-            foreach (var hashByte in hashBytes)
-            {
-                hashBuilder.Append(hashByte.ToString("x"));
-            }
-
-            return hashBuilder.ToString();
+            return string.Join(string.Empty, hashBytes.Select(b => b.ToString("x")));
         }
     }
 }
