@@ -1,6 +1,5 @@
 ﻿using Secp256k1;
 using System;
-using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
