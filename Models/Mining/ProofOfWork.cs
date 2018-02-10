@@ -9,7 +9,8 @@ namespace Models.Mining
             uint nonce = 0;
             var newBlockId = chainStats.LastBlockId + 1;
             var transactions = chainStats.PendingTransactions
-                .Select(t => { t.BlockId = newBlockId; return t; });
+                .Select(t => { t.BlockId = newBlockId; return t; })
+                .ToList();
 
             while (true)
             {

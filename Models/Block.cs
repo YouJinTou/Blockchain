@@ -8,7 +8,7 @@ namespace Models
     public class Block
     {
         private uint id;
-        private IEnumerable<Transaction> transactions;
+        private ICollection<Transaction> transactions;
         private uint difficulty;
         private string previousHash;
         private string minedBy;
@@ -17,8 +17,8 @@ namespace Models
         private string hash;
 
         public Block(
-            uint id, 
-            IEnumerable<Transaction> transactions,
+            uint id,
+            ICollection<Transaction> transactions,
             uint difficulty,
             string previousHash,
             string minedBy,
@@ -38,7 +38,7 @@ namespace Models
 
         public uint Id => this.id;
 
-        public IEnumerable<Transaction> Transactions => this.transactions;
+        public ICollection<Transaction> Transactions => this.transactions;
 
         public uint Difficulty => this.difficulty;
 
