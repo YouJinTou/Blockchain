@@ -1,60 +1,62 @@
 ﻿@model BlockViewModel
 
-<div class="row form-group">
-    <div class="col-xs-6 col-xs-offset-3">
-        <div class="row form-group">
-            <div class="col-xs-6">
-                <label asp-for="Id"></label>
+<div class="col-xs-6">
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <div class="row form-group">
+                <div class="col-xs-6">
+                    <label asp-for="Id"></label>
 
-                <h5>@Model.Id</h5>
+                    <h5>@Model.Id</h5>
+                </div>
+
+                <div class="col-xs-6">
+                    <label asp-for="TransactionsCount"></label>
+
+                    <h5>@Model.TransactionsCount</h5>
+                </div>
             </div>
 
-            <div class="col-xs-6">
-                <label asp-for="TransactionsCount"></label>
+            <div class="row form-group">
+                <div class="col-xs-6">
+                    <label asp-for="Difficulty"></label>
 
-                <h5>@Model.TransactionsCount</h5>
-            </div>
-        </div>
+                    <h5>@Model.Difficulty</h5>
+                </div>
 
-        <div class="row form-group">
-            <div class="col-xs-6">
-                <label asp-for="Difficulty"></label>
+                <div class="col-xs-6">
+                    <label asp-for="MinedBy"></label>
 
-                <h5>@Model.Difficulty</h5>
-            </div>
-
-            <div class="col-xs-6">
-                <label asp-for="MinedBy"></label>
-
-                <h5>@Model.MinedBy</h5>
-            </div>
-        </div>
-
-        <div class="row form-group">
-            <div class="col-xs-6">
-                <label asp-for="Hash"></label>
-
-                <h5>@Model.Hash</h5>
+                    <h5>@Model.MinedBy</h5>
+                </div>
             </div>
 
-            <div class="col-xs-6">
-                <label asp-for="PreviousHash"></label>
+            <div class="row form-group">
+                <div class="col-xs-6">
+                    <label asp-for="Hash"></label>
 
-                <h5>@Model.PreviousHash</h5>
+                    <h5>@Model.Hash</h5>
+                </div>
+
+                <div class="col-xs-6">
+                    <label asp-for="PreviousHash"></label>
+
+                    <h5>@Model.PreviousHash</h5>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-xs-6">
-                <label asp-for="Nonce"></label>
+            <div class="row form-group">
+                <div class="col-xs-6">
+                    <label asp-for="Nonce"></label>
 
-                <h5>@Model.Nonce</h5>
-            </div>
+                    <h5>@Model.Nonce</h5>
+                </div>
 
-            <div class="col-xs-6">
-                <label asp-for="MinedOn"></label>
+                <div class="col-xs-6">
+                    <label asp-for="MinedOn"></label>
 
-                <h5>@Model.MinedOn</h5>
+                    <h5>@Model.MinedOn</h5>
+                </div>
             </div>
         </div>
     </div>
