@@ -20,7 +20,7 @@ namespace Services.Nodes
 
         public NodeService(
             IBlockGenerator blockGenerator,
-            IBlockchainValidator chainValidator, 
+            IBlockchainValidator chainValidator,
             ITransactionValidator transactionValidator,
             IOptions<FaucetSettings> faucetSettings)
         {
@@ -29,19 +29,18 @@ namespace Services.Nodes
                 new Uri("http://localhost:53633/"),
                 chainValidator,
                 transactionValidator);
-            var transactions = new List<Transaction>
-            {
-                new Transaction(
-                    faucetSettings.Value.Address, 
-                    faucetSettings.Value.Address, 
-                    faucetSettings.Value.Balance, 
-                    faucetSettings.Value.PublicKey, 
-                    null)
-            };
+            var transaction = new Transaction(
+                faucetSettings.Value.Address,
+                faucetSettings.Value.Address,
+                faucetSettings.Value.Balance,
+                faucetSettings.Value.PublicKey,
+                null);
 
             this.node.RegisterAddress(faucetSettings.Value.Address, faucetSettings.Value.Balance);
 
-            this.node.ReceiveBlock(blockGenerator.GenerateBlock(transactions));
+            this.node.PendingTransactions.Add(transaction);
+
+            this.node.ReceiveBlock(blockGenerator.GenerateBlock(this.node.PendingTransactions));
         }
 
         public Node GetNode()

@@ -23,7 +23,7 @@ namespace Services.Generation
             var block = this.consensusStrategy.GetBlock(new ChainStats
             {
                 MinerAddress = this.faucetSettings.Value.Address,
-                Difficulty = 0,
+                Difficulty = 1,
                 LastBlockHash = string.Empty,
                 LastBlockId = 0,
                 PendingTransactions = transactions

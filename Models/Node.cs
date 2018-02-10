@@ -158,6 +158,8 @@ namespace Models
 
         private void AdjustBalances(Block block)
         {
+            var transactionsToRemove = new List<Transaction>();
+
             foreach (var transaction in block.Transactions)
             {
                 var matchingTransaction = 
@@ -165,7 +167,12 @@ namespace Models
                 this.balances[matchingTransaction.From] -= matchingTransaction.Amount;
                 this.balances[matchingTransaction.To] += matchingTransaction.Amount;
 
-                this.pendingTransactions.Remove(matchingTransaction);
+                transactionsToRemove.Add(matchingTransaction);
+            }
+
+            foreach (var transaction in transactionsToRemove)
+            {
+                this.pendingTransactions.Remove(transaction);
             }
         }
 
