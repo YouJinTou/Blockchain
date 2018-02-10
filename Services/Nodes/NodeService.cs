@@ -1,15 +1,16 @@
-﻿using Models.Validation;
-using System;
-using Models;
-using Models.Web.Nodes;
-using Models.Web.Users;
-using Services.Generation;
-using AutoMapper;
-using Models.Web.Wallets;
-using System.Linq;
-using Secp256k1;
+﻿using AutoMapper;
 using Microsoft.Extensions.Options;
+using Models;
+using Models.Validation;
+using Models.Web.Nodes;
 using Models.Web.Settings;
+using Models.Web.Users;
+using Models.Web.Wallets;
+using Secp256k1;
+using Services.Generation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Nodes
 {
@@ -45,6 +46,11 @@ namespace Services.Nodes
         public Node GetNode()
         {
             return this.node;
+        }
+
+        public ICollection<Block> GetChain()
+        {
+            return this.node.Blockchain;
         }
 
         public void AddPeer(AddPeerModel model)

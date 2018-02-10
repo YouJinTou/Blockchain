@@ -3,12 +3,15 @@ using Models.Web.Nodes;
 using Models.Web.Users;
 using Models.Web.Wallets;
 using Secp256k1;
+using System.Collections.Generic;
 
 namespace Services.Nodes
 {
     public interface INodeService
     {
         Node GetNode();
+
+        ICollection<Block> GetChain();
 
         void AddPeer(AddPeerModel model);
 
