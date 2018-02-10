@@ -7,6 +7,7 @@ using Services.Generation;
 using AutoMapper;
 using Models.Web.Wallets;
 using System.Linq;
+using Secp256k1;
 
 namespace Services.Nodes
 {
@@ -41,11 +42,6 @@ namespace Services.Nodes
         public void RegisterAddress(RegisterUserModel model)
         {
             this.node.RegisterAddress(model.Address, model.Balance);
-        }
-
-        public void ReceiveTransaction(TransactionModel model)
-        {
-            this.node.ReceiveTransaction(Mapper.Map<TransactionModel, Transaction>(model));
         }
 
         public Transaction GetTransaction(string hash)
@@ -95,9 +91,9 @@ namespace Services.Nodes
             return history;
         }
 
-        public void SendTransaction(Transaction transaction)
+        public void ReceiveTransaction(Transaction transaction, SignedMessage signature)
         {
-            this.node.ReceiveTransaction(transaction);
+            this.node.ReceiveTransaction(transaction, signature);
         }
     }
 }

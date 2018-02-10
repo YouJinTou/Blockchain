@@ -2,6 +2,7 @@
 using Models.Web.Nodes;
 using Models.Web.Users;
 using Models.Web.Wallets;
+using Secp256k1;
 
 namespace Services.Nodes
 {
@@ -13,14 +14,12 @@ namespace Services.Nodes
 
         void RegisterAddress(RegisterUserModel model);
 
-        void ReceiveTransaction(TransactionModel model);
-
         Transaction GetTransaction(string hash);
 
         void ReceiveBlock(Block block);
 
         AddressHistory GetAddressHistory(string address);
 
-        void SendTransaction(Transaction model);
+        void ReceiveTransaction(Transaction model, SignedMessage signature);
     }
 }

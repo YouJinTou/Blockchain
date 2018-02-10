@@ -1,4 +1,5 @@
 ﻿using Models.Validation;
+using Secp256k1;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,9 +90,9 @@ namespace Models
             this.BroadcastBlock(block);
         }
 
-        public void ReceiveTransaction(Transaction transaction)
+        public void ReceiveTransaction(Transaction transaction, SignedMessage signature)
         {
-            this.transactionValidator.ValidateTransaction(transaction, this.balances);
+            this.transactionValidator.ValidateTransaction(transaction, this.balances, signature);
 
             this.pendingTransactions.Add(transaction);
         }

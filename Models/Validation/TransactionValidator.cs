@@ -1,4 +1,5 @@
 ﻿using Models.Hashing;
+using Secp256k1;
 using System;
 using System.Collections.Generic;
 
@@ -16,7 +17,7 @@ namespace Models.Validation
         }
 
         public void ValidateTransaction(
-            Transaction transaction, IDictionary<string, decimal> balances)
+            Transaction transaction, IDictionary<string, decimal> balances, SignedMessage signature)
         {
             if (!balances.ContainsKey(transaction.From))
             {
@@ -45,10 +46,10 @@ namespace Models.Validation
                     $"only has {balances[transaction.From]}.");
             }
 
-            //if (this.signerVerifier.MessageVerified())
-            //{
-
-            //}
+            if (!this.signerVerifier.MessageVerified(signature))
+            {
+                throw new ArgumentException($"Invalid transaction signature.");
+            }
         }
     }
 }

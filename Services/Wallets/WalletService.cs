@@ -51,7 +51,7 @@ namespace Services.Wallets
             var transaction = new Transaction(
                 model.From, model.To, model.Amount, signature.Signature);
 
-            this.nodeService.SendTransaction(transaction);
+            this.nodeService.ReceiveTransaction(transaction, signature);
         }
     }
 }
