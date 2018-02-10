@@ -1,13 +1,13 @@
-﻿@model ExplorerViewModel
+﻿@model ICollection<ExplorerViewModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Block Explorer";
 }
 
 <h1>Block Explorer</h1>
 
 <div class="row form-group">
     <div class="col-xs-12">
-
+        @Html.DisplayForModel()
     </div>
 </div>
