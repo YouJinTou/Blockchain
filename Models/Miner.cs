@@ -1,42 +1,29 @@
-﻿using System.Linq;
+﻿using Models.Mining;
+using System.Linq;
 
 namespace Models
 {
     public class Miner
     {
         private string address;
+        private IConsensusStrategy consensusStrategy;
 
-        public Miner(string address)
+        public Miner(string address, IConsensusStrategy consensusStrategy)
         {
             this.address = address;
+            this.consensusStrategy = consensusStrategy;
         }
 
         public Block MineBlock(Node node)
         {
-            uint nonce = 0;
-            var newBlockId = node.LastBlock.Id + 1;
-            var transactions = node.PendingTransactions
-                .Select(t => { t.BlockId = newBlockId; return t; });
-
-            while (true)
+            return this.consensusStrategy.GetBlock(new ChainStats
             {
-                var block = new Block(
-                    newBlockId,
-                    transactions, 
-                    node.Difficulty, 
-                    node.LastBlock.Hash, 
-                    this.address, 
-                    nonce);
-                var expectedLeadingString = new string('0', (int)node.Difficulty);
-                var actualLeadingString = block.Hash.Substring(0, (int)node.Difficulty);
-
-                if (expectedLeadingString.Equals(actualLeadingString))
-                {
-                    return block;
-                }
-
-                nonce++;
-            }
+                Difficulty = node.Difficulty,
+                LastBlockHash = node.LastBlock.Hash,
+                LastBlockId = node.LastBlock.Id,
+                MinerAddress = this.address,
+                PendingTransactions = node.PendingTransactions
+            });
         }
     }
 }
