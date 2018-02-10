@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Mining;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -27,7 +28,7 @@ namespace MiningClient
         {
             Console.Write("Address: ");
 
-            var miner = new Miner(Console.ReadLine());
+            var miner = new Miner(Console.ReadLine(), new ProofOfWork());
 
             return miner;
         }
