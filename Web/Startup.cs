@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Models.Hashing;
+using Models.Mining;
 using Models.Validation;
 using Models.Web.Settings;
 using Services.Cryptography;
@@ -30,6 +31,7 @@ namespace Web
             services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
             services.AddTransient<ITransactionValidator, TransactionValidator>();
+            services.AddTransient<IConsensusStrategy, ProofOfWork>();
             services.AddTransient<IBlockGenerator, GenesisBlockGenerator>();
             services.AddTransient<IWalletService, WalletService>();
             services.AddTransient<ITransactionSecurityService, TransactionSecurityService>();

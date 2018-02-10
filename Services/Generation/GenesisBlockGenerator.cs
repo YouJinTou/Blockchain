@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Models;
+using Models.Mining;
 using Models.Web.Settings;
 using System.Collections.Generic;
 
@@ -7,17 +8,28 @@ namespace Services.Generation
 {
     public class GenesisBlockGenerator : IBlockGenerator
     {
+        IConsensusStrategy consensusStrategy;
         IOptions<FaucetSettings> faucetSettings;
 
-        public GenesisBlockGenerator(IOptions<FaucetSettings> faucetSettings)
+        public GenesisBlockGenerator(
+            IConsensusStrategy consensusStrategy, IOptions<FaucetSettings> faucetSettings)
         {
+            this.consensusStrategy = consensusStrategy;
             this.faucetSettings = faucetSettings;
         }
 
         public Block GenerateBlock(ICollection<Transaction> transactions)
         {
-            return new Block(
-                0, transactions, 0, "FAUCET", this.faucetSettings.Value.Address, 0);
+            var block = this.consensusStrategy.GetBlock(new ChainStats
+            {
+                MinerAddress = this.faucetSettings.Value.Address,
+                Difficulty = 0,
+                LastBlockHash = string.Empty,
+                LastBlockId = 0,
+                PendingTransactions = transactions
+            });
+
+            return block;
         }
     }
 }
