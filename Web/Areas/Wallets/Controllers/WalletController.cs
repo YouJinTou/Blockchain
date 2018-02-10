@@ -75,5 +75,12 @@ namespace Web.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult Send()
+        {
+            return View();
+        }
     }
 }

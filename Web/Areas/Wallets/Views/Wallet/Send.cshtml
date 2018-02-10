@@ -1,0 +1,49 @@
+﻿@model SendTransactionViewModel
+
+@{
+    ViewData["Title"] = "Send Transaction";
+}
+
+<h1>Send Transaction</h1>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label asp-for="From"></label>
+                <input asp-for="From" class="form-control" />
+                <span asp-validation-for="From"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label asp-for="To"></label>
+                <input asp-for="To" class="form-control" />
+                <span asp-validation-for="To"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label asp-for="Amount"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <label asp-for="PrivateKey"></label>
+                <input asp-for="PrivateKey" class="form-control" />
+                <span asp-validation-for="PrivateKey"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <input type="submit" class="btn btn-group" value="Sign Transaction" />
+            </div>
+        </div>
+    </div>
+</div>
