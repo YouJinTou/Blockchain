@@ -6,6 +6,7 @@ using Models.Web.Faucet;
 using Models.Web.Nodes;
 using Models.Web.Wallets;
 using Services.Wallets;
+using Web.Areas.Explorer.Models;
 using Web.Areas.Faucet.Models;
 using Web.Areas.Wallets.Models;
 
@@ -25,6 +26,8 @@ namespace Web.Config
                 cfg.CreateMap<Transaction, TransactionViewModel>();
                 cfg.CreateMap<AddressHistory, AddressHistoryViewModel>();
                 cfg.CreateMap<FaucetSendViewModel, FaucetSendModel>();
+                cfg.CreateMap<Block, BlockViewModel>()
+                    .ForMember(d => d.TransactionsCount, s => s.MapFrom(model => model.Transactions.Count));
                 cfg.CreateMap<AddressHistory, SearchAddressViewModel>()
                     .ForMember(s => s.AddressHistory, d => d.MapFrom(model => model));
                 cfg.CreateMap<SendTransactionModel, Transaction>()

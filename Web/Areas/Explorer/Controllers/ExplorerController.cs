@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Models;
 using Services.Nodes;
+using System.Collections.Generic;
+using Web.Areas.Explorer.Models;
 
 namespace Web.Controllers
 {
@@ -21,7 +25,10 @@ namespace Web.Controllers
         [Route("[area]/[action]")]
         public IActionResult Index()
         {
-            return View();
+            var blocks = Mapper.Map<ICollection<Block>, ICollection<BlockViewModel>>(
+                this.nodeService.GetChain());
+
+            return View(blocks);
         }
     }
 }
