@@ -30,31 +30,31 @@ namespace Web.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult Create(CreateWalletViewModel model, string message)
+        public IActionResult Create(string message)
         {
             ViewBag.Message = message;
 
-            return View(model ?? new CreateWalletViewModel());
+            return View(new CreateWalletViewModel());
         }
 
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Route("[action]")]
-        public IActionResult CreateWallet([FromForm]CreateWalletViewModel model)
+        public IActionResult CreateWallet([FromForm]CreateWalletViewModel bindingModel)
         {
-            var credentials = new WalletCredentials();
-            var message = string.Empty;
+            var model = new CreateWalletViewModel();
 
             try
             {
-                credentials = this.walletService.CreateWallet(model.Password);
+                model = Mapper.Map<WalletCredentials, CreateWalletViewModel>(
+                    this.walletService.CreateWallet(bindingModel.Password));
             }
             catch (Exception ex)
             {
-                message = ex.Message;
+                return RedirectToAction("Create", new { ex.Message });
             }
 
-            return RedirectToAction("Create", new { model, message });
+            return View("Create", model);
         }
 
         [HttpGet]
