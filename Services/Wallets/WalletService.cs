@@ -36,5 +36,10 @@ namespace Services.Wallets
         {
             return this.nodeService.GetAddressHistory(address);
         }
+
+        public void SendTransaction(SendTransactionModel model)
+        {
+            this.nodeService.SendTransaction(model);
+        }
     }
 }

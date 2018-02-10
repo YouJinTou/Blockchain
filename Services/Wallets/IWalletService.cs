@@ -7,5 +7,7 @@ namespace Services.Wallets
         WalletCredentials CreateWallet(string password);
 
         AddressHistory GetAddressHistory(string address);
+
+        void SendTransaction(SendTransactionModel model);
     }
 }
