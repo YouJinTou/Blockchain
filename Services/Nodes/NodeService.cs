@@ -71,6 +71,11 @@ namespace Services.Nodes
 
         public AddressHistory GetAddressHistory(string address)
         {
+            if (!this.node.Balances.ContainsKey(address))
+            {
+                return new AddressHistory();
+            }
+
             var inTransactions = this.node.Blockchain
                 .SelectMany(b => b.Transactions)
                 .Where(t => t.To.Equals(address))
