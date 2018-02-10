@@ -7,10 +7,12 @@ namespace Models.Validation
     public class TransactionValidator : ITransactionValidator
     {
         private IHasher hasher;
+        private IMessageSignerVerifier signerVerifier;
 
-        public TransactionValidator(IHasher hasher)
+        public TransactionValidator(IHasher hasher, IMessageSignerVerifier signerVerifier)
         {
             this.hasher = hasher;
+            this.signerVerifier = signerVerifier;
         }
 
         public void ValidateTransaction(
@@ -42,6 +44,11 @@ namespace Models.Validation
                     $"Tried to send {transaction.Amount}, but {transaction.From} " +
                     $"only has {balances[transaction.From]}.");
             }
+
+            //if (this.signerVerifier.MessageVerified())
+            //{
+
+            //}
         }
     }
 }

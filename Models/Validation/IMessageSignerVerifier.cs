@@ -1,6 +1,6 @@
 ﻿using Secp256k1;
 
-namespace Services.Cryptography
+namespace Models.Validation
 {
     public interface IMessageSignerVerifier
     {

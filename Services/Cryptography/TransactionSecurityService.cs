@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Validation;
 using Secp256k1;
 
 namespace Services.Cryptography

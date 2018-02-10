@@ -23,7 +23,7 @@ namespace Tests.Models
         public void SetupTest()
         {
             var chainValidator = new BlockchainValidator(new Sha256Hasher());
-            var txValidator = new TransactionValidator(new Sha256Hasher());
+            var txValidator = new TransactionValidator(new Sha256Hasher(), new MessageSignerVerifier());
             this.node1 = new Node("Node 1", new Uri("http://127.0.1.1"), chainValidator, txValidator);
             this.node2 = new Node("Node 2", new Uri("http://127.0.1.2"), chainValidator, txValidator);
             this.minerAddress = "miner-address";

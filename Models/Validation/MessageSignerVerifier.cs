@@ -1,6 +1,6 @@
-﻿    using Secp256k1;
+﻿using Secp256k1;
 
-namespace Services.Cryptography
+namespace Models.Validation
 {
     public class MessageSignerVerifier : Secp256k1.MessageSignerVerifier, IMessageSignerVerifier
     {

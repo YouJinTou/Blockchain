@@ -36,7 +36,7 @@ namespace Web.Config
                             apm.Name,
                             apm.NetworkAddress,
                             new BlockchainValidator(hasher),
-                            new TransactionValidator(hasher)));
+                            new TransactionValidator(hasher, new MessageSignerVerifier())));
             });
         }
     }
