@@ -26,11 +26,13 @@ namespace Services.Faucet
 
         public void SendFunds(FaucetSendModel model)
         {
+            model.From = this.settings.Value.Address;
+            model.PrivateKey = this.settings.Value.PrivateKey;
             var transactionBuffer = Mapper.Map<FaucetSendModel, Transaction>(model);
             var signature = this.securityService.GetTransactionSignature(
-               transactionBuffer, settings.Value.PrivateKey);
+               transactionBuffer, this.settings.Value.PrivateKey);
             var transaction = new Transaction(
-                settings.Value.Address,
+                this.settings.Value.Address,
                 model.To,
                 model.Amount,
                 transactionBuffer.PublicKey,
