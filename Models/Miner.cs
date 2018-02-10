@@ -1,5 +1,4 @@
 ﻿using Models.Mining;
-using System.Linq;
 
 namespace Models
 {
