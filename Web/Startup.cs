@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Models.Hashing;
 using Models.Validation;
+using Models.Web.Settings;
 using Services.Cryptography;
 using Services.Generation;
 using Services.Nodes;
@@ -32,6 +33,8 @@ namespace Web
             services.AddTransient<IWalletService, WalletService>();
             services.AddTransient<ITransactionSecurityService, TransactionSecurityService>();
             services.AddTransient<IMessageSignerVerifier, MessageSignerVerifier>();
+
+            services.Configure<FaucetSettings>(this.Configuration.GetSection("Faucet"));
 
             MapperConfig.RegisterMappings();
         }
