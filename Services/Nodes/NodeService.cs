@@ -94,5 +94,10 @@ namespace Services.Nodes
 
             return history;
         }
+
+        public void SendTransaction(Transaction transaction)
+        {
+            this.node.ReceiveTransaction(transaction);
+        }
     }
 }

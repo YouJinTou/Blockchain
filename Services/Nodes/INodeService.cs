@@ -20,5 +20,7 @@ namespace Services.Nodes
         void ReceiveBlock(Block block);
 
         AddressHistory GetAddressHistory(string address);
+
+        void SendTransaction(Transaction model);
     }
 }
