@@ -45,7 +45,7 @@ namespace Web.Areas.Faucet.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Create", new { ex.Message });
+                return RedirectToAction("Index", new { ex.Message });
             }
         }
     }
