@@ -18,13 +18,18 @@ namespace Web.Config
 
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<TransactionModel, Transaction>();
                 cfg.CreateMap<SendTransactionViewModel, SendTransactionModel>();
                 cfg.CreateMap<WalletCredentials, CreateWalletViewModel>();
                 cfg.CreateMap<Transaction, TransactionViewModel>();
                 cfg.CreateMap<AddressHistory, AddressHistoryViewModel>();
                 cfg.CreateMap<AddressHistory, SearchAddressViewModel>()
                     .ForMember(s => s.AddressHistory, d => d.MapFrom(model => model));
+                cfg.CreateMap<TransactionModel, Transaction>()
+                    .ConstructUsing(tm =>
+                        new Transaction(tm.From, tm.To, tm.Amount, tm.Signature));
+                cfg.CreateMap<SendTransactionModel, Transaction>()
+                    .ConstructUsing(tm =>
+                        new Transaction(tm.From, tm.To, tm.Amount, null));
                 cfg.CreateMap<AddPeerModel, Node>()
                     .ConstructUsing(apm =>
                         new Node(

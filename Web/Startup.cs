@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Models.Hashing;
 using Models.Validation;
+using Services.Cryptography;
 using Services.Generation;
 using Services.Nodes;
 using Services.Wallets;
@@ -29,6 +30,8 @@ namespace Web
             services.AddTransient<ITransactionValidator, TransactionValidator>();
             services.AddTransient<IBlockGenerator, GenesisBlockGenerator>();
             services.AddTransient<IWalletService, WalletService>();
+            services.AddTransient<ITransactionSecurityService, TransactionSecurityService>();
+            services.AddTransient<IMessageSignerVerifier, MessageSignerVerifier>();
 
             MapperConfig.RegisterMappings();
         }

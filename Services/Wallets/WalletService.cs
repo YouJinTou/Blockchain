@@ -1,5 +1,7 @@
-﻿using Models;
+﻿using AutoMapper;
+using Models;
 using Models.Web.Wallets;
+using Services.Cryptography;
 using Services.Nodes;
 
 namespace Services.Wallets
@@ -7,10 +9,14 @@ namespace Services.Wallets
     public class WalletService : IWalletService
     {
         private INodeService nodeService;
+        private ITransactionSecurityService securityService;
 
-        public WalletService(INodeService nodeService)
+        public WalletService(
+            INodeService nodeService, 
+            ITransactionSecurityService securityService)
         {
             this.nodeService = nodeService;
+            this.securityService = securityService;
         }
 
         public WalletCredentials CreateWallet(string password)
@@ -39,7 +45,13 @@ namespace Services.Wallets
 
         public void SendTransaction(SendTransactionModel model)
         {
-            this.nodeService.SendTransaction(model);
+            var transactionBuffer = Mapper.Map<SendTransactionModel, Transaction>(model);
+            var signature = this.securityService.GetTransactionSignature(
+               transactionBuffer, model.PrivateKey);
+            var transaction = new Transaction(
+                model.From, model.To, model.Amount, signature.Signature);
+
+            this.nodeService.SendTransaction(transaction);
         }
     }
 }
