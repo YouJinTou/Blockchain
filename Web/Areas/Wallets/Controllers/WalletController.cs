@@ -30,8 +30,10 @@ namespace Web.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public IActionResult Create(CreateWalletViewModel model)
+        public IActionResult Create(CreateWalletViewModel model, string message)
         {
+            ViewBag.Message = message;
+
             return View(model ?? new CreateWalletViewModel());
         }
 
@@ -41,6 +43,7 @@ namespace Web.Controllers
         public IActionResult CreateWallet([FromForm]CreateWalletViewModel model)
         {
             var credentials = new WalletCredentials();
+            var message = string.Empty;
 
             try
             {
@@ -48,10 +51,10 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                message = ex.Message;
             }
 
-            return RedirectToAction("Create", credentials);
+            return RedirectToAction("Create", new { model, message });
         }
 
         [HttpGet]
