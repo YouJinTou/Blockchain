@@ -17,11 +17,10 @@ namespace Models
 
         public Wallet(string password)
         {
-            this.GeneratePrivateKey(password);
-
-            this.GeneratePublicKey();
-
-            this.GenerateAddress();
+            this.privateKey = this.GeneratePrivateKey(password);
+            this.publicKey = this.GeneratePublicKey(this.privateKey);
+            this.publicKeyPair = GeneratePublicKeyPair(this.privateKey);
+            this.address = this.GenerateAddress(this.publicKeyPair);
         }
 
         public string PrivateKey => this.privateKey;
@@ -30,7 +29,12 @@ namespace Models
 
         public string Address => this.address;
 
-        private void GeneratePrivateKey(string password)
+        public static string GetPublicKey(string privateKey)
+        {
+            return CompressEcPoint(GeneratePublicKeyPair(privateKey));
+        }
+
+        private string GeneratePrivateKey(string password)
         {
             var hmacSha512 = new HMACSHA512(Encoding.Unicode.GetBytes(CoinSeed));
             var hash = hmacSha512.ComputeHash(Encoding.Unicode.GetBytes(password));
@@ -45,22 +49,30 @@ namespace Models
                 hashBuilder.Append(hashByte.ToString("x"));
             }
 
-            this.privateKey = hashBuilder.ToString();
+            return hashBuilder.ToString();
         }
 
-        private void GeneratePublicKey()
+        private static Secp256k1.ECPoint GeneratePublicKeyPair(string privateKey)
         {
-            var privateKey = Hex.HexToBigInteger(this.privateKey);
-            this.publicKeyPair = Secp256k1.Secp256k1.G.Multiply(privateKey);
-            this.publicKey = this.CompressEcPoint(publicKeyPair);
+            var privateKeyBigInt = Hex.HexToBigInteger(privateKey);
+
+            return Secp256k1.Secp256k1.G.Multiply(privateKeyBigInt);
         }
 
-        private void GenerateAddress()
+        private string GeneratePublicKey(string privateKey)
         {
-            this.address = this.publicKeyPair.GetBitcoinAddress(false);
+            var privateKeyBigInt = Hex.HexToBigInteger(privateKey);
+            var publicKeyPair = Secp256k1.Secp256k1.G.Multiply(privateKeyBigInt);
+
+            return CompressEcPoint(publicKeyPair);
         }
 
-        private string CompressEcPoint(Secp256k1.ECPoint point)
+        private string GenerateAddress(Secp256k1.ECPoint publicKeyPair)
+        {
+            return publicKeyPair.GetBitcoinAddress(false);
+        }
+
+        private static string CompressEcPoint(Secp256k1.ECPoint point)
         {
             return point.X.ToString("x2") + Convert.ToInt32(!point.X.TestBit(0));
         }

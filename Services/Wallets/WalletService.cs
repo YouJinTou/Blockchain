@@ -50,7 +50,11 @@ namespace Services.Wallets
             var signature = this.securityService.GetTransactionSignature(
                transactionBuffer, model.PrivateKey);
             var transaction = new Transaction(
-                model.From, model.To, model.Amount, signature.Signature);
+                model.From, 
+                model.To, 
+                model.Amount,
+                transactionBuffer.PublicKey, 
+                signature.Signature);
 
             this.nodeService.ReceiveTransaction(transaction, signature);
         }

@@ -9,6 +9,7 @@ namespace Models
         private string from;
         private string to;
         private decimal amount;
+        private string publicKey;
         private string signature;
         private DateTime createdOn;
         private string hash;
@@ -17,12 +18,14 @@ namespace Models
             string from, 
             string to, 
             decimal amount, 
+            string publicKey,
             string signature, 
             IHasher hasher = null)
         {
             this.from = from;
             this.to = to;
             this.amount = amount;
+            this.publicKey = publicKey;
             this.signature = signature;
             this.createdOn = DateTime.Now;
 
@@ -34,6 +37,8 @@ namespace Models
         public string To => this.to;
 
         public decimal Amount => this.amount;
+
+        public string PublicKey => this.publicKey;
 
         public string Signature => this.signature;
 
@@ -50,6 +55,7 @@ namespace Models
             sb.Append(this.from.ToString());
             sb.Append(this.to.ToString());
             sb.Append(this.amount.ToString());
+            sb.Append(this.publicKey.ToString());
             //sb.Append(this.signature.ToString());
             //sb.Append(this.createdOn.Ticks.ToString());
 

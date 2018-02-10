@@ -24,12 +24,9 @@ namespace Web.Config
                 cfg.CreateMap<AddressHistory, AddressHistoryViewModel>();
                 cfg.CreateMap<AddressHistory, SearchAddressViewModel>()
                     .ForMember(s => s.AddressHistory, d => d.MapFrom(model => model));
-                cfg.CreateMap<TransactionModel, Transaction>()
-                    .ConstructUsing(tm =>
-                        new Transaction(tm.From, tm.To, tm.Amount, tm.Signature));
                 cfg.CreateMap<SendTransactionModel, Transaction>()
                     .ConstructUsing(tm =>
-                        new Transaction(tm.From, tm.To, tm.Amount, null));
+                        new Transaction(tm.From, tm.To, tm.Amount, Wallet.GetPublicKey(tm.PrivateKey), null));
                 cfg.CreateMap<AddPeerModel, Node>()
                     .ConstructUsing(apm =>
                         new Node(
