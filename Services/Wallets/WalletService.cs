@@ -1,4 +1,5 @@
 ﻿using Models;
+using Models.Web.Wallets;
 using Services.Nodes;
 
 namespace Services.Wallets
@@ -29,6 +30,11 @@ namespace Services.Wallets
                 });
 
             return credentials;
+        }
+
+        public AddressHistory GetAddressHistory(string address)
+        {
+            return this.nodeService.GetAddressHistory(address);
         }
     }
 }

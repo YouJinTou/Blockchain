@@ -1,6 +1,4 @@
-using System;
-
-namespace Web.Models
+namespace Web.Areas.Wallets.Models
 {
     public class ErrorViewModel
     {

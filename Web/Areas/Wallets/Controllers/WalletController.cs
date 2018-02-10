@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Models.Web.Wallets;
 using Services.Wallets;
 using System;
-using Web.Models;
+using Web.Areas.Wallets.Models;
 
 namespace Web.Controllers
 {
@@ -49,6 +51,29 @@ namespace Web.Controllers
             }
 
             return RedirectToAction("Create", credentials);
+        }
+
+        [HttpGet]
+        [Route("Search")]
+        public IActionResult Address()
+        {
+            var model = new SearchAddressViewModel
+            {
+                AddressHistory = new AddressHistoryViewModel()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("{address}")]
+        [ValidateAntiForgeryToken]
+        public IActionResult Address(string address)
+        {
+            var model = Mapper.Map<AddressHistory, SearchAddressViewModel>(
+                this.walletService.GetAddressHistory(address));
+
+            return View(model);
         }
     }
 }

@@ -4,8 +4,9 @@ using Models.Hashing;
 using Models.Validation;
 using Models.Web.Nodes;
 using Models.Web.Users;
+using Models.Web.Wallets;
 using Services.Wallets;
-using Web.Models;
+using Web.Areas.Wallets.Models;
 
 namespace Web.Config
 {
@@ -19,6 +20,10 @@ namespace Web.Config
             {
                 cfg.CreateMap<TransactionModel, Transaction>();
                 cfg.CreateMap<WalletCredentials, CreateWalletViewModel>();
+                cfg.CreateMap<Transaction, TransactionViewModel>();
+                cfg.CreateMap<AddressHistory, AddressHistoryViewModel>();
+                cfg.CreateMap<AddressHistory, SearchAddressViewModel>()
+                    .ForMember(s => s.AddressHistory, d => d.MapFrom(model => model));
                 cfg.CreateMap<AddPeerModel, Node>()
                     .ConstructUsing(apm =>
                         new Node(

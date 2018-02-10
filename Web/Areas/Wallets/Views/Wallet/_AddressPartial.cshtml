@@ -1,0 +1,21 @@
+﻿@model AddressHistoryViewModel
+
+@{
+    ViewData["Title"] = "Address";
+}
+
+<h1>@Model.Address</h1>
+
+<h2>Balance: @Model.Balance</h2>
+
+<div class="row">
+    <div class="col-xs-6">
+        <h3>Incoming Transactions</h3>
+        @Html.DisplayFor(m => m.InTransactions)
+    </div>
+
+    <div class="col-xs-6">
+        <h3>Outgoing Transactions</h3>
+        @Html.DisplayFor(m => m.OutTransactions)
+    </div>
+</div>
