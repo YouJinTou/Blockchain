@@ -8,7 +8,7 @@
 
 <h2 class="text-info">@ViewBag.Message</h2>
 
-<form asp-area="Wallets" asp-controller="Wallet" 
+<form asp-area="Wallets" asp-controller="Wallet"
       asp-action="SendTransaction" asp-antiforgery="true" method="post">
     <div class="row">
         <div class="col-xs-12">
@@ -54,6 +54,5 @@
 </form>
 
 @section Scripts {
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @Html.Partial("_ValidationScriptsPartial")
 }

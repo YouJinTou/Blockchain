@@ -25,6 +25,5 @@
 @Html.Partial("_AddressPartial", Model.AddressHistory)
 
 @section Scripts {
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @Html.Partial("_ValidationScriptsPartial")
 }
