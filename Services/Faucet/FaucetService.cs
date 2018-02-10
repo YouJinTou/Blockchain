@@ -5,6 +5,7 @@ using Models.Web.Faucet;
 using Models.Web.Settings;
 using Services.Cryptography;
 using Services.Nodes;
+using System;
 
 namespace Services.Faucet
 {
@@ -36,10 +37,11 @@ namespace Services.Faucet
             var transactionBuffer = Mapper.Map<FaucetSendModel, Transaction>(model);
             var signature = this.securityService.GetTransactionSignature(
                transactionBuffer, this.settings.Value.PrivateKey);
+            var random = new Random();
             var transaction = new Transaction(
                 this.settings.Value.Address,
                 model.To,
-                model.Amount,
+                (decimal)(random.NextDouble() * 10),
                 transactionBuffer.PublicKey,
                 signature.Signature);
 

@@ -8,9 +8,5 @@ namespace Web.Areas.Faucet.Models
 
         [Required]
         public string To { get; set; }
-
-        [Required]
-        [Range(0.01d, double.MaxValue, ErrorMessage = "Invalid amount.")]
-        public decimal Amount { get; set; }
     }
 }

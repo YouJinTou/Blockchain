@@ -10,18 +10,14 @@
 
 <h3>Balance: @Model.Balance</h3>
 
+<h4>You will get between 0 and 10 coins.</h4>
+
 <form asp-area="Faucet" asp-controller="Faucet" asp-action="Send" asp-antiforgery="true" method="post">
     <div class="row form-group">
         <div class="col-xs-12">
             <label asp-for="To"></label>
             <input asp-for="To" class="form-control" />
             <span asp-validation-for="To" class="text-danger"></span>
-        </div>
-
-        <div class="col-xs-12 form-group">
-            <label asp-for="Amount"></label>
-            <input asp-for="Amount" class="form-control" />
-            <span asp-validation-for="Amount" class="text-danger"></span>
         </div>
     </div>
 
