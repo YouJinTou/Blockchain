@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models.Hashing;
+using Models.Validation;
 using Services.Generation;
 using Services.Nodes;
 using Services.Wallets;
@@ -21,6 +23,9 @@ namespace WebWallet
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<IHasher, Sha256Hasher>();
+            services.AddTransient<IBlockchainValidator, BlockchainValidator>();
+            services.AddTransient<ITransactionValidator, TransactionValidator>();
             services.AddTransient<IBlockGenerator, GenesisBlockGenerator>();
             services.AddTransient<INodeService, NodeService>();
             services.AddTransient<IWalletService, WalletService>();
