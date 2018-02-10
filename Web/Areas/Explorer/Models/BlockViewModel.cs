@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Areas.Explorer.Models
 {
-    public class ExplorerViewModel
+    public class BlockViewModel
     {
         public int Id { get; set; }
 
