@@ -46,10 +46,10 @@ namespace Models.Validation
                     $"only has {balances[transaction.From]}.");
             }
 
-            if (!this.signerVerifier.MessageVerified(signature))
-            {
-                throw new ArgumentException($"Invalid transaction signature.");
-            }
+            //if (!this.signerVerifier.MessageVerified(signature, transaction.PublicKey))
+            //{
+            //    throw new ArgumentException($"Invalid transaction signature.");
+            //}
         }
     }
 }

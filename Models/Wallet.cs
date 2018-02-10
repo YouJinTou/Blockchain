@@ -38,9 +38,10 @@ namespace Models
         {
             var hmacSha512 = new HMACSHA512(Encoding.Unicode.GetBytes(CoinSeed));
             var hash = hmacSha512.ComputeHash(Encoding.Unicode.GetBytes(password));
-            var leftSequence = new byte[hash.Length / 2];
+            var keyLength = (hash.Length / 2) + 1;
+            var leftSequence = new byte[keyLength];
 
-            Array.Copy(hash, 0, leftSequence, 0, hash.Length / 2);
+            Array.Copy(hash, 0, leftSequence, 0, keyLength);
 
             var hashBuilder = new StringBuilder();
 

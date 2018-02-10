@@ -7,7 +7,7 @@ namespace Secp256k1
     {
         private readonly ECDsaSigner signer = new ECDsaSigner();
 
-        public bool Verify(SignedMessage message)
+        public bool Verify(SignedMessage message, string publicKey)
         {
             var r = new byte[32];
             var s = new byte[32];
@@ -25,7 +25,6 @@ namespace Secp256k1
             var hash = SHA256.DoubleHash(data);
 
             var point = signer.RecoverFromSignature(hash, r.ToBigIntegerUnsigned(true), s.ToBigIntegerUnsigned(true), recId);
-
             var pubKeyHash = Hash160.Hash(point.EncodePoint(false));
             var addressBytes = new byte[pubKeyHash.Length + 1];
             Buffer.BlockCopy(pubKeyHash, 0, addressBytes, 1, pubKeyHash.Length);

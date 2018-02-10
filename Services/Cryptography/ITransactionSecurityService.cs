@@ -7,6 +7,6 @@ namespace Services.Cryptography
     {
         SignedMessage GetTransactionSignature(Transaction transaction, string privateKey);
 
-        bool TransactionVerified(SignedMessage signedTransaction);
+        bool TransactionVerified(SignedMessage signedTransaction, string publicKey);
     }
 }

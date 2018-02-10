@@ -9,9 +9,9 @@ namespace Models.Validation
             return base.Sign(Hex.HexToBigInteger(privateKey), message);
         }
 
-        public bool MessageVerified(SignedMessage message)
+        public bool MessageVerified(SignedMessage message, string publicKey)
         {
-            return base.Verify(message);
+            return base.Verify(message, publicKey);
         }
     }
 }

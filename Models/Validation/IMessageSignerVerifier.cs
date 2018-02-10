@@ -6,6 +6,6 @@ namespace Models.Validation
     {
         SignedMessage GetMessageSignature(string privateKey, string message);
 
-        bool MessageVerified(SignedMessage message);
+        bool MessageVerified(SignedMessage message, string publicKey);
     }
 }

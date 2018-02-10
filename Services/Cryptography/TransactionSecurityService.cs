@@ -19,9 +19,9 @@ namespace Services.Cryptography
                 privateKey, transaction.GetMetadataString());
         }
 
-        public bool TransactionVerified(SignedMessage signedTransaction)
+        public bool TransactionVerified(SignedMessage signedTransaction, string publicKey)
         {
-            return this.messageSignerVerifier.MessageVerified(signedTransaction);
+            return this.messageSignerVerifier.MessageVerified(signedTransaction, publicKey);
         }
     }
 }
