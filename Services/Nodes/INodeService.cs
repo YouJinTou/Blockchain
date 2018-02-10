@@ -1,6 +1,7 @@
 ﻿using Models;
 using Models.Web.Nodes;
 using Models.Web.Users;
+using Models.Web.Wallets;
 
 namespace Services.Nodes
 {
@@ -17,5 +18,7 @@ namespace Services.Nodes
         Transaction GetTransaction(string hash);
 
         void ReceiveBlock(Block block);
+
+        AddressHistory GetAddressHistory(string address);
     }
 }

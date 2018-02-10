@@ -5,6 +5,8 @@ using Models.Web.Nodes;
 using Models.Web.Users;
 using Services.Generation;
 using AutoMapper;
+using Models.Web.Wallets;
+using System.Linq;
 
 namespace Services.Nodes
 {
@@ -65,6 +67,27 @@ namespace Services.Nodes
         public void ReceiveBlock(Block block)
         {
             this.node.ReceiveBlock(block);
+        }
+
+        public AddressHistory GetAddressHistory(string address)
+        {
+            var inTransactions = this.node.Blockchain
+                .SelectMany(b => b.Transactions)
+                .Where(t => t.To.Equals(address))
+                .ToList();
+            var outTransactions = this.node.Blockchain
+                .SelectMany(b => b.Transactions)
+                .Where(t => t.From.Equals(address))
+                .ToList();
+            var history = new AddressHistory
+            {
+                Address = address,
+                Balance = this.node.Balances[address],
+                InTransactions = inTransactions,
+                OutTransactions = outTransactions
+            };
+
+            return history;
         }
     }
 }
