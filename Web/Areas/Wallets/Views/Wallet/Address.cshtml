@@ -5,11 +5,19 @@
 }
 
 <form asp-area="Wallets" asp-controller="Wallet" asp-action="Address" asp-antiforgery="true" method="post">
-    <label asp-for="Address"></label>
-    <input asp-for="Address" class="form-control" />
-    <span asp-validation-for="Address" class="text-danger"></span>
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <label asp-for="Address"></label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+    </div>
 
-    <input type="submit" value="Search" class="btn btn-default" />
+    <div class="row form-group">
+        <div class="col-xs-12">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+    </div>
 </form>
 
 @Html.Partial("_AddressPartial", Model.AddressHistory)
