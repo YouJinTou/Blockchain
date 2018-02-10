@@ -44,7 +44,7 @@ namespace Services.Nodes
 
         public Node GetNode()
         {
-            return Mapper.Map<Node, Node>(this.node);
+            return this.node;
         }
 
         public void AddPeer(AddPeerModel model)
