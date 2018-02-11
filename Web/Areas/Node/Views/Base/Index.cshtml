@@ -17,15 +17,31 @@
             <div class="col-xs-12">
                 <div data-post-container="" class="row">
                     <div class="col-xs-10">
-                        <input data-prop-name="Name" type="text" 
+                        <input data-prop-name="Name" type="text"
                                placeholder="Name" class="form-control" />
-                        <input data-prop-name="NetworkAddress" type="text" 
+                        <input data-prop-name="NetworkAddress" type="text"
                                placeholder="Network address" class="form-control" />
                     </div>
-                    
+
                     <div class="col-xs-2">
                         <input data-api-post="" data-controller="Node" data-action="Peers/Add"
                                class="btn btn-default" value="Add Peer" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div data-post-container="" class="row">
+                    <div class="col-xs-10">
+                        <input data-prop-name="hash" type="text"
+                               placeholder="Transaction hash" class="form-control" />
+                    </div>
+
+                    <div class="col-xs-2">
+                        <input data-api-post="" data-controller="Transactions" data-action="Get"
+                               class="btn btn-default" value="Get Transaction" />
                     </div>
                 </div>
             </div>
