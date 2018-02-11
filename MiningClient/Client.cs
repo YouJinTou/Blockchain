@@ -20,10 +20,17 @@ namespace MiningClient
 
             while (true)
             {
-                var node = GetNodeInfo();
-                var block = miner.MineBlock(node);
+                try
+                {
+                    var node = GetNodeInfo();
+                    var block = miner.MineBlock(node);
 
-                SendBlock(block);
+                    SendBlock(block);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
         }
 
