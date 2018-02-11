@@ -34,6 +34,19 @@
     word-break: break-all;
 }
 
+#explorer .block {
+    margin-right: 20px;
+}
+
+#explorer .block-inner {
+    background-color: #ececec;
+    padding: 5px;
+}
+
+#explorer .breakable {
+    word-break: break-all;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

@@ -1,7 +1,7 @@
 ﻿@model BlockViewModel
 
-<div class="col-xs-6">
-    <div class="row form-group">
+<div class="block col-xs-5">
+    <div class="block-inner row form-group">
         <div class="col-xs-12">
             <div class="row form-group">
                 <div class="col-xs-6">
@@ -24,7 +24,7 @@
                     <h5>@Model.Difficulty</h5>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-xs-6 breakable">
                     <label asp-for="MinedBy"></label>
 
                     <h5>@Model.MinedBy</h5>
@@ -32,13 +32,13 @@
             </div>
 
             <div class="row form-group">
-                <div class="col-xs-6">
+                <div class="col-xs-6 breakable">
                     <label asp-for="Hash"></label>
 
                     <h5>@Model.Hash</h5>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-xs-6 breakable">
                     <label asp-for="PreviousHash"></label>
 
                     <h5>@Model.PreviousHash</h5>
