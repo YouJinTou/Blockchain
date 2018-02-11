@@ -1,11 +1,14 @@
-﻿using Secp256k1;
+﻿using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Models.Validation
 {
     public interface IMessageSignerVerifier
     {
-        SignedMessage GetMessageSignature(string privateKey, string message);
+        byte[] GetMessageSignature(string privateKey, string message);
 
-        bool MessageVerified(SignedMessage message, string publicKey);
+        bool MessageVerified(
+            byte[] signature, ECPublicKeyParameters publicKeyParams, string message);
+
+        ECPublicKeyParameters GetPublicKeyParams(string privateKey);
     }
 }

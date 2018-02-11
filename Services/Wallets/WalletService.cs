@@ -49,14 +49,17 @@ namespace Services.Wallets
             var transactionBuffer = Mapper.Map<SendTransactionModel, Transaction>(model);
             var signature = this.securityService.GetTransactionSignature(
                transactionBuffer, model.PrivateKey);
+            var signatureString = this.securityService.GetTransactionSignatureString(
+               transactionBuffer, model.PrivateKey);
             var transaction = new Transaction(
-                model.From, 
-                model.To, 
+                model.From,
+                model.To,
                 model.Amount,
-                transactionBuffer.PublicKey, 
-                signature.Signature);
+                transactionBuffer.PublicKey,
+                signatureString);
+            var publicKeyParams = this.securityService.GetPublicKeyParams(model.PrivateKey);
 
-            this.nodeService.ReceiveTransaction(transaction, signature);
+            this.nodeService.ReceiveTransaction(transaction, signature, publicKeyParams);
         }
     }
 }

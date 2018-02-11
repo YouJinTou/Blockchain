@@ -2,7 +2,7 @@
 using Models.Web.Nodes;
 using Models.Web.Users;
 using Models.Web.Wallets;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
 using System.Collections.Generic;
 
 namespace Services.Nodes
@@ -25,6 +25,7 @@ namespace Services.Nodes
 
         AddressHistory GetAddressHistory(string address);
 
-        void ReceiveTransaction(Transaction model, SignedMessage signature);
+        void ReceiveTransaction(
+            Transaction model, byte[] signature, ECPublicKeyParameters publicKeyParams);
     }
 }

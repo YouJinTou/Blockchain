@@ -1,12 +1,17 @@
 ﻿using Models;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace Services.Cryptography
 {
     public interface ITransactionSecurityService
     {
-        SignedMessage GetTransactionSignature(Transaction transaction, string privateKey);
+        byte[] GetTransactionSignature(Transaction transaction, string privateKey);
 
-        bool TransactionVerified(SignedMessage signedTransaction, string publicKey);
+        string GetTransactionSignatureString(Transaction transaction, string privateKey);
+
+        bool TransactionVerified(
+            byte[] signature, ECPublicKeyParameters publicKeyParams, string message);
+
+        ECPublicKeyParameters GetPublicKeyParams(string privateKey);
     }
 }

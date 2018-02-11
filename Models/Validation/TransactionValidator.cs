@@ -1,5 +1,5 @@
 ﻿using Models.Hashing;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +17,10 @@ namespace Models.Validation
         }
 
         public void ValidateTransaction(
-            Transaction transaction, IDictionary<string, decimal> balances, SignedMessage signature)
+            Transaction transaction, 
+            IDictionary<string, decimal> balances, 
+            byte[] signature, 
+            ECPublicKeyParameters publicKeyParams)
         {
             if (!balances.ContainsKey(transaction.From))
             {
@@ -46,7 +49,8 @@ namespace Models.Validation
                     $"only has {balances[transaction.From]}.");
             }
 
-            //if (!this.signerVerifier.MessageVerified(signature, transaction.PublicKey))
+            //if (!this.signerVerifier.MessageVerified(
+            //    signature, publicKeyParams, transaction.GetMetadataString()))
             //{
             //    throw new ArgumentException($"Invalid transaction signature.");
             //}

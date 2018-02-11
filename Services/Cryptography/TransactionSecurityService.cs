@@ -1,6 +1,7 @@
 ﻿using Models;
 using Models.Validation;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
+using System.Linq;
 
 namespace Services.Cryptography
 {
@@ -13,15 +14,28 @@ namespace Services.Cryptography
             this.messageSignerVerifier = messageSignerVerifier;
         }
 
-        public SignedMessage GetTransactionSignature(Transaction transaction, string privateKey)
+        public ECPublicKeyParameters GetPublicKeyParams(string privateKey)
+        {
+            return this.messageSignerVerifier.GetPublicKeyParams(privateKey);
+        }
+
+        public byte[] GetTransactionSignature(Transaction transaction, string privateKey)
         {
             return this.messageSignerVerifier.GetMessageSignature(
                 privateKey, transaction.GetMetadataString());
         }
 
-        public bool TransactionVerified(SignedMessage signedTransaction, string publicKey)
+        public string GetTransactionSignatureString(Transaction transaction, string privateKey)
         {
-            return this.messageSignerVerifier.MessageVerified(signedTransaction, publicKey);
+            var signature = this.GetTransactionSignature(transaction, privateKey);
+
+            return string.Join(string.Empty, signature.Select(b => b.ToString("x")));
+        }
+
+        public bool TransactionVerified(
+            byte[] signature, ECPublicKeyParameters publicKeyParams, string message)
+        {
+            return this.messageSignerVerifier.MessageVerified(signature, publicKeyParams, message);
         }
     }
 }

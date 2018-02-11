@@ -5,7 +5,7 @@ using Models.Web.Nodes;
 using Models.Web.Settings;
 using Models.Web.Users;
 using Models.Web.Wallets;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
 using Services.Generation;
 using Services.Web;
 using System;
@@ -139,9 +139,10 @@ namespace Services.Nodes
             return history;
         }
 
-        public void ReceiveTransaction(Transaction transaction, SignedMessage signature)
+        public void ReceiveTransaction(
+            Transaction transaction, byte[] signature, ECPublicKeyParameters publicKeyParams)
         {
-            this.node.ReceiveTransaction(transaction, signature);
+            this.node.ReceiveTransaction(transaction, signature, publicKeyParams);
         }
     }
 }

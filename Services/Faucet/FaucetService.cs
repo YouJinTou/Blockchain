@@ -32,20 +32,25 @@ namespace Services.Faucet
 
         public void SendFunds(FaucetSendModel model)
         {
+            var random = new Random();
+            var amount = (decimal)(random.NextDouble() * 10);
             model.From = this.settings.Value.Address;
             model.PrivateKey = this.settings.Value.PrivateKey;
+            model.Amount = amount;
             var transactionBuffer = Mapper.Map<FaucetSendModel, Transaction>(model);
             var signature = this.securityService.GetTransactionSignature(
                transactionBuffer, this.settings.Value.PrivateKey);
-            var random = new Random();
+            var signatureString = this.securityService.GetTransactionSignatureString(
+               transactionBuffer, model.PrivateKey);
             var transaction = new Transaction(
                 this.settings.Value.Address,
                 model.To,
-                (decimal)(random.NextDouble() * 10),
+                amount,
                 transactionBuffer.PublicKey,
-                signature.Signature);
+                signatureString);
+            var publicKeyParams = this.securityService.GetPublicKeyParams(model.PrivateKey);
 
-            this.nodeService.ReceiveTransaction(transaction, signature);
+            this.nodeService.ReceiveTransaction(transaction, signature, publicKeyParams);
         }
     }
 }

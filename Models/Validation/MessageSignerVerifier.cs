@@ -1,17 +1,24 @@
-﻿using Secp256k1;
+﻿using Org.BouncyCastle.Crypto.Parameters;
+using System.Text;
 
 namespace Models.Validation
 {
-    public class MessageSignerVerifier : Secp256k1.MessageSignerVerifier, IMessageSignerVerifier
+    public class MessageSignerVerifier : IMessageSignerVerifier
     {
-        public SignedMessage GetMessageSignature(string privateKey, string message)
+        public byte[] GetMessageSignature(string privateKey, string message)
         {
-            return base.Sign(Hex.HexToBigInteger(privateKey), message);
+            return Wallet.GetTransactionSignature(message, Encoding.UTF8.GetBytes(message));
         }
 
-        public bool MessageVerified(SignedMessage message, string publicKey)
+        public ECPublicKeyParameters GetPublicKeyParams(string privateKey)
         {
-            return base.Verify(message, publicKey);
+            return Wallet.GetPublicKeyParams(privateKey);
+        }
+
+        public bool MessageVerified(
+            byte[] signature, ECPublicKeyParameters publicKeyParams, string message)
+        {
+            return Wallet.SignatureValid(publicKeyParams, signature, message);
         }
     }
 }

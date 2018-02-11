@@ -35,7 +35,7 @@ namespace Web.Config
                         new Transaction(tm.From, tm.To, tm.Amount, Wallet.GetPublicKey(tm.PrivateKey), null));
                 cfg.CreateMap<FaucetSendModel, Transaction>()
                     .ConstructUsing(fm =>
-                        new Transaction(fm.From, fm.To, 0.0m, Wallet.GetPublicKey(fm.PrivateKey), null));
+                        new Transaction(fm.From, fm.To, fm.Amount, Wallet.GetPublicKey(fm.PrivateKey), null));
                 cfg.CreateMap<AddPeerModel, Node>()
                     .ConstructUsing(apm =>
                         new Node(

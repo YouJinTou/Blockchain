@@ -1,25 +1,33 @@
-﻿using Secp256k1;
+﻿using Org.BouncyCastle.Asn1.Sec;
+using Org.BouncyCastle.Asn1.X9;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Security;
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Models
 {
+    // https://github.com/blockchain-dev-camp/blockchain-wallet/blob/master/BlockchainWallet/BlockchainWallet.Services/AddressService.cs
     public class Wallet
     {
         private const string CoinSeed = "Coin seed";
+        private const string SignerType = "SHA-256withECDSA";
+        private static readonly X9ECParameters CurveParams = SecNamedCurves.GetByName("secp256k1");
+        private static readonly ECDomainParameters DomainParams = 
+            new ECDomainParameters(CurveParams.Curve, CurveParams.G, CurveParams.N, CurveParams.H);
 
         private string privateKey;
         private string publicKey;
-        private Secp256k1.ECPoint publicKeyPair;
         private string address;
 
         public Wallet(string password)
         {
-            this.privateKey = this.GeneratePrivateKey(password);
-            this.publicKey = this.GeneratePublicKey(this.privateKey);
-            this.publicKeyPair = GeneratePublicKeyPair(this.privateKey);
-            this.address = this.GenerateAddress(this.publicKeyPair);
+            this.privateKey = this.GetPrivateKey(password);
+            this.publicKey = GetPublicKey(privateKey);
+            this.address = this.GetAddress(this.publicKey);
         }
 
         public string PrivateKey => this.privateKey;
@@ -30,10 +38,49 @@ namespace Models
 
         public static string GetPublicKey(string privateKey)
         {
-            return CompressEcPoint(GeneratePublicKeyPair(privateKey));
+            var publicKeyParams = GetPublicKeyParams(privateKey);
+
+            return BytesToHex(publicKeyParams.Q.GetEncoded());
         }
 
-        private string GeneratePrivateKey(string password)
+        public static ECPublicKeyParameters GetPublicKeyParams(string privateKey)
+        {
+            var seed = new BigInteger(Encoding.UTF8.GetBytes(privateKey));
+            var publicKeyPair = DomainParams.G.Multiply(seed);
+
+            return new ECPublicKeyParameters(publicKeyPair, DomainParams);
+        }
+
+        public static byte[] GetTransactionSignature(string message, byte[] privateKey)
+        {
+            var privateKeyBigInt = new BigInteger(privateKey);
+            var privateKeyParams = new ECPrivateKeyParameters(privateKeyBigInt, DomainParams);
+            var messageBytes = Encoding.UTF8.GetBytes(message);
+            var signer = SignerUtilities.GetSigner(SignerType);
+
+            signer.Init(true, privateKeyParams);
+
+            signer.BlockUpdate(messageBytes, 0, messageBytes.Length);
+
+            var signature = signer.GenerateSignature();
+
+            return signature;
+        }
+
+        public static bool SignatureValid(
+            ECPublicKeyParameters publicKeyParams, byte[] signature, string message)
+        {
+            var messageBytes = Encoding.UTF8.GetBytes(message);
+            var signer = SignerUtilities.GetSigner(SignerType);
+
+            signer.Init(false, publicKeyParams);
+
+            signer.BlockUpdate(messageBytes, 0, messageBytes.Length);
+
+            return signer.VerifySignature(signature);
+        }
+
+        private string GetPrivateKey(string password)
         {
             var hmacSha512 = new HMACSHA512(Encoding.Unicode.GetBytes(CoinSeed));
             var hash = hmacSha512.ComputeHash(Encoding.Unicode.GetBytes(password));
@@ -42,39 +89,22 @@ namespace Models
 
             Array.Copy(hash, 0, leftSequence, 0, keyLength);
 
-            var hashBuilder = new StringBuilder();
+            return BytesToHex(leftSequence);
+        }
 
-            foreach (var hashByte in leftSequence)
+        private string GetAddress(string publicKey)
+        {
+            using (var ripeMd160 = new SshNet.Security.Cryptography.RIPEMD160())
             {
-                hashBuilder.Append(hashByte.ToString("x"));
+                var addressRipe = ripeMd160.ComputeHash(Encoding.Unicode.GetBytes(publicKey));
+
+                return BytesToHex(addressRipe);
             }
-
-            return hashBuilder.ToString();
         }
 
-        private static Secp256k1.ECPoint GeneratePublicKeyPair(string privateKey)
+        private static string BytesToHex(byte[] bytes)
         {
-            var privateKeyBigInt = Hex.HexToBigInteger(privateKey);
-
-            return Secp256k1.Secp256k1.G.Multiply(privateKeyBigInt);
-        }
-
-        private string GeneratePublicKey(string privateKey)
-        {
-            var privateKeyBigInt = Hex.HexToBigInteger(privateKey);
-            var publicKeyPair = Secp256k1.Secp256k1.G.Multiply(privateKeyBigInt);
-
-            return CompressEcPoint(publicKeyPair);
-        }
-
-        private string GenerateAddress(Secp256k1.ECPoint publicKeyPair)
-        {
-            return publicKeyPair.GetBitcoinAddress(false);
-        }
-
-        private static string CompressEcPoint(Secp256k1.ECPoint point)
-        {
-            return point.X.ToString("x2") + Convert.ToInt32(!point.X.TestBit(0));
+            return string.Join(string.Empty, bytes.Select(h => h.ToString("x")));
         }
     }
 }

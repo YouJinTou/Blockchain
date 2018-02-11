@@ -1,5 +1,5 @@
 ﻿using Models.Validation;
-using Secp256k1;
+using Org.BouncyCastle.Crypto.Parameters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,9 +92,11 @@ namespace Models
             return true;
         }
 
-        public void ReceiveTransaction(Transaction transaction, SignedMessage signature)
+        public void ReceiveTransaction(
+            Transaction transaction, byte[] signature, ECPublicKeyParameters publicKeyParams)
         {
-            this.transactionValidator.ValidateTransaction(transaction, this.balances, signature);
+            this.transactionValidator.ValidateTransaction(
+                transaction, this.balances, signature, publicKeyParams);
 
             this.pendingTransactions.Add(transaction);
         }

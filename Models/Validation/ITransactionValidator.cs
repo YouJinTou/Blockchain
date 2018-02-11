@@ -1,4 +1,4 @@
-﻿using Secp256k1;
+﻿using Org.BouncyCastle.Crypto.Parameters;
 using System.Collections.Generic;
 
 namespace Models.Validation
@@ -8,6 +8,7 @@ namespace Models.Validation
         void ValidateTransaction(
             Transaction transaction, 
             IDictionary<string, decimal> balances, 
-            SignedMessage signature);
+            byte[] signature,
+            ECPublicKeyParameters publicKeyParams);
     }
 }
