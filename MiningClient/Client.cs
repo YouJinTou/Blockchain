@@ -1,9 +1,7 @@
 ﻿using Models;
 using Models.Mining;
-using Newtonsoft.Json;
+using Services.Web;
 using System;
-using System.Net.Http;
-using System.Text;
 
 namespace MiningClient
 {
@@ -12,11 +10,13 @@ namespace MiningClient
         private static readonly string Endpoint = "http://localhost:60000/";
         private static readonly string NodeEndpoint = $"{Endpoint}node/node/get";
         private static readonly string SendEndpoint = $"{Endpoint}node/mining/receive";
-        private static readonly HttpClient client = new HttpClient();
+
+        private static IWebService webService;
 
         public static void Main()
         {
             var miner = InstantiateMiner();
+            webService = new WebService();
 
             while (true)
             {
@@ -38,18 +38,12 @@ namespace MiningClient
 
         public static Node GetNodeInfo()
         {
-            var responseString = client.GetStringAsync(NodeEndpoint).Result;
-            var node = JsonConvert.DeserializeObject<Node>(responseString);
-
-            return node;
+            return webService.GetDeserialized<Node>(NodeEndpoint);
         }
 
         public static void SendBlock(Block block)
         {
-            var content = new StringContent(
-                JsonConvert.SerializeObject(block), Encoding.UTF8, "application/json");
-            var response = client.PostAsync(new Uri(SendEndpoint), content).Result;
-            var responseString = response.Content.ReadAsStringAsync().Result;
+            var responseString = webService.SendSerialized(SendEndpoint, block);
 
             Console.WriteLine(responseString);
         }
