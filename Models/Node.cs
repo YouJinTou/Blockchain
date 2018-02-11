@@ -190,7 +190,10 @@ namespace Models
 
         private void RewardMiner(Block block)
         {
-            this.balances[block.MinedBy] += block.Transactions.Count;
+            if (!string.IsNullOrEmpty(block.PreviousHash))
+            {
+                this.balances[block.MinedBy] += block.Transactions.Count;
+            }
         }
 
         private void BroadcastBlock(Block block)
