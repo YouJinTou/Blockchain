@@ -50,10 +50,15 @@
     }
 
     function doGet(url) {
-        $.get(url, function (result) {
-            appendResult(result);
-        }).fail(function (ex) {
-            appendResult(ex.responseJSON);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (result) {
+                appendResult(result);
+            },
+            error: function (ex) {
+                appendResult(ex.responseJSON);
+            }
         });
     }
 
@@ -63,14 +68,14 @@
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            'type': 'POST',
-            'url': url,
-            'data': JSON.stringify(data),
-            'dataType': 'json',
-            'success': function (result) {
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(data),
+            dataType: 'json',
+            success: function (result) {
                 appendResult(result);
             },
-            'error': function (ex) {
+            error: function (ex) {
                 appendResult(ex.responseJSON);
             }
         });
