@@ -40,6 +40,7 @@ namespace Web
             services.AddTransient<IMessageSignerVerifier, MessageSignerVerifier>();
             services.AddTransient<IFaucetService, FaucetService>();
 
+            services.Configure<Endpoints>(this.Configuration.GetSection("Endpoints"));
             services.Configure<NodeSettings>(this.Configuration.GetSection("Node"));
             services.Configure<FaucetSettings>(this.Configuration.GetSection("Faucet"));
 
