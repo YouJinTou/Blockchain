@@ -3,7 +3,7 @@ using Models.Web.Users;
 using Services.Nodes;
 using System;
 
-namespace Web.Controllers
+namespace Web.Areas.Node.Controllers
 {
     [Route("[area]/[controller]")]
     public class UsersController : BaseController

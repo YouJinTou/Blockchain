@@ -3,7 +3,7 @@ using Models.Web.Nodes;
 using Services.Nodes;
 using System;
 
-namespace Web.Controllers
+namespace Web.Areas.Node.Controllers
 {
     [Route("[area]/[controller]")]
     public class NodeController : BaseController
@@ -17,7 +17,7 @@ namespace Web.Controllers
         [Route("")]
         public IActionResult Get()
         {
-            return new JsonResult(this.NodeService.GetNode());
+            return Json(this.NodeService.GetNode());
         }
 
         [HttpPost]

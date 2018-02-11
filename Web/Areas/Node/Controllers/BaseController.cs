@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Nodes;
 
-namespace Web.Controllers
+namespace Web.Areas.Node.Controllers
 {
     [Area("Node")]
     [Route("[area]")]
