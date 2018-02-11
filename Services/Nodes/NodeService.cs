@@ -22,11 +22,12 @@ namespace Services.Nodes
             IBlockGenerator blockGenerator,
             IBlockchainValidator chainValidator,
             ITransactionValidator transactionValidator,
+            IOptions<NodeSettings> nodeSettings,
             IOptions<FaucetSettings> faucetSettings)
         {
             this.node = new Node(
-                "Outcrop",
-                new Uri("http://localhost:53633/"),
+                nodeSettings.Value.Name,
+                new Uri(nodeSettings.Value.Address),
                 chainValidator,
                 transactionValidator);
             var transaction = new Transaction(

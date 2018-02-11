@@ -38,6 +38,7 @@ namespace Web
             services.AddTransient<IMessageSignerVerifier, MessageSignerVerifier>();
             services.AddTransient<IFaucetService, FaucetService>();
 
+            services.Configure<NodeSettings>(this.Configuration.GetSection("Node"));
             services.Configure<FaucetSettings>(this.Configuration.GetSection("Faucet"));
 
             MapperConfig.RegisterMappings();
