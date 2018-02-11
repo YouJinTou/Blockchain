@@ -14,7 +14,7 @@ namespace Web.Areas.Node.Controllers
         }
 
         [HttpGet]
-        [Route("")]
+        [Route("[action]")]
         public IActionResult Get()
         {
             return Json(this.NodeService.GetNode());
