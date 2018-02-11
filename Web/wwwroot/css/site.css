@@ -82,6 +82,10 @@
     word-break: break-all;
 }
 
+#wallet-header ul li {
+    font-size: 1.6em;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */
