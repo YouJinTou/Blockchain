@@ -7,14 +7,34 @@
 <div class="row form-group">
     <div class="col-xs-8 col-xs-offset-2">
         <div class="row form-group">
-            <div class="col-xs-2">
-                <input type="button" asp-area="Node" asp-controller="Node"
-                       asp-action="Get" class="btn btn-default" value="Node" />
+            <div class="col-xs-12">
+                <input data-api-get="" data-controller="Node" data-action=""
+                       class="btn btn-default" value="Node" />
             </div>
         </div>
 
-        <hr />
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div data-post-container="" class="row">
+                    <div class="col-xs-10">
+                        <input data-prop-name="Name" type="text" 
+                               placeholder="Name" class="form-control" />
+                        <input data-prop-name="NetworkAddress" type="text" 
+                               placeholder="Network address" class="form-control" />
+                    </div>
+                    
+                    <div class="col-xs-2">
+                        <input data-api-post="" data-controller="Node" data-action="Peers/Add"
+                               class="btn btn-default" value="Add Peer" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        @Html.Partial("_DataPartial")
+        <div class="row form-group">
+            <div class="col-xs-12">
+                <div id="results"></div>
+            </div>
+        </div>
     </div>
 </div>
