@@ -1,5 +1,6 @@
 ﻿using Models;
 using Models.Hashing;
+using Models.Mining;
 using Models.Validation;
 using NUnit.Framework;
 using System;
@@ -11,11 +12,9 @@ namespace Tests.Models
     [TestFixture]
     public class NodeTests
     {
-        private const uint Difficulty = 2;
 
         private Node node1;
         private Node node2;
-        private string minerAddress;
         private Block genesisBlock;
         private Block block1;
 
@@ -24,15 +23,24 @@ namespace Tests.Models
         {
             var chainValidator = new BlockchainValidator(new Sha256Hasher());
             var txValidator = new TransactionValidator(new Sha256Hasher(), new MessageSignerVerifier());
+            var consensusAlgorithm = new ProofOfWork();
+            uint difficulty = 2;
+            var minerAddress = "miner-address";
             this.node1 = new Node("Node 1", new Uri("http://127.0.1.1"), chainValidator, txValidator);
             this.node2 = new Node("Node 2", new Uri("http://127.0.1.2"), chainValidator, txValidator);
-            this.minerAddress = "miner-address";
             this.genesisBlock = new Block(
-                0, new List<Transaction>(), Difficulty, string.Empty, minerAddress, 0);
-            this.block1 = this.GetValidBlock(this.genesisBlock.Hash, this.genesisBlock.Id);
+                0, new List<Transaction>(), difficulty, string.Empty, minerAddress, 0);
+            this.block1 = consensusAlgorithm.GetBlock(new ChainStats
+            {
+                Difficulty = difficulty,
+                LastBlockHash = this.genesisBlock.Hash,
+                LastBlockId = this.genesisBlock.Id,
+                MinerAddress = minerAddress,
+                PendingTransactions = new List<Transaction>()
+            });
 
-            this.node1.RegisterAddress(this.minerAddress, 0.0m);
-            this.node2.RegisterAddress(this.minerAddress, 0.0m);
+            this.node1.RegisterAddress(minerAddress, 0.0m);
+            this.node2.RegisterAddress(minerAddress, 0.0m);
         }
 
         [TestCase]
@@ -91,25 +99,6 @@ namespace Tests.Models
             await Task.Delay(TimeSpan.FromSeconds(1.1));
 
             Assert.That(this.node1.Blockchain.Count == 1);
-        }
-
-        private Block GetValidBlock(string prevBlockHash, uint prevId)
-        {
-            uint nonce = 0;
-
-            while (true)
-            {
-                var block = new Block(1, new List<Transaction>(), Difficulty, prevBlockHash, this.minerAddress, nonce);
-                var actualLeadingString = block.Hash.Substring(0, (int)block.Difficulty);
-                var expectedLeadingString = new string('0', (int)block.Difficulty);
-
-                if (actualLeadingString.Equals(expectedLeadingString))
-                {
-                    return block;
-                }
-
-                nonce++;
-            }
         }
     }
 }
