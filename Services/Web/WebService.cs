@@ -20,7 +20,7 @@ namespace Services.Web
         public string SendSerialized<T>(string endpoint, T obj) where T : class
         {
             var content = new StringContent(
-                JsonConvert.SerializeObject(T), Encoding.UTF8, "application/json");
+                JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
             var response = client.PostAsync(new Uri(endpoint), content).Result;
             var responseString = response.Content.ReadAsStringAsync().Result;
 
