@@ -26,6 +26,14 @@
     margin: 15px;
 }
 
+#api-container .spaceable {
+    margin-bottom: 2px;
+}
+
+#api-container #results {
+    word-break: break-all;
+}
+
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

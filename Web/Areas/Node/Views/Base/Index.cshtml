@@ -4,41 +4,41 @@
 
 <h1>Node API</h1>
 
-<div class="row form-group">
-    <div class="col-xs-8 col-xs-offset-2">
+<div id="api-container" class="row">
+    <div class="col-xs-12">
         <div class="row form-group">
             <div class="col-xs-12">
                 <input type="button" data-api-get="" data-controller="Node" data-action=""
-                       class="btn btn-default" value="Node" />
+                       class="btn btn-default" value="Get Node" />
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="row form-group">
             <div class="col-xs-12">
                 <div data-post-container="" class="row">
                     <div class="col-xs-10">
                         <input data-prop-name="Address" type="text"
-                               placeholder="Network Address" class="form-control" />
+                               placeholder="Network Address" class="form-control spaceable" />
                         <input data-prop-name="Balance" type="text"
-                               placeholder="Balance" class="form-control" />
+                               placeholder="Balance" class="form-control spaceable" />
                     </div>
 
                     <div class="col-xs-2">
                         <input type="button" data-api-post="" data-controller="Users"
-                               data-action="Register" class="btn btn-default" value="Register user" />
+                               data-action="Register" class="btn btn-default" value="Register User" />
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="row form-group">
             <div class="col-xs-12">
                 <div data-post-container="" class="row">
                     <div class="col-xs-10">
                         <input data-prop-name="Name" type="text"
-                               placeholder="Name" class="form-control" />
+                               placeholder="Name" class="form-control spaceable" />
                         <input data-prop-name="NetworkAddress" type="text"
-                               placeholder="Network address" class="form-control" />
+                               placeholder="Network address" class="form-control spaceable" />
                     </div>
 
                     <div class="col-xs-2">
@@ -54,7 +54,7 @@
                 <div data-get-container="" class="row">
                     <div class="col-xs-10">
                         <input data-param="" type="text"
-                               placeholder="Transaction" class="form-control" />
+                               placeholder="Transaction" class="form-control spaceable" />
                     </div>
 
                     <div class="col-xs-2">
@@ -67,8 +67,8 @@
         </div>
 
         <div class="row form-group">
-            <div class="col-xs-12">
-                <div id="results"></div>
+            <div class="col-xs-12 text-info">
+                <pre id="results"></pre>
             </div>
         </div>
     </div>
