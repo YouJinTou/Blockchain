@@ -2,11 +2,11 @@
 
 namespace Web.Controllers
 {
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            return Ok();
+            return View();
         }
     }
 }

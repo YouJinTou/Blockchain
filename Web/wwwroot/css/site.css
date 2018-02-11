@@ -26,6 +26,36 @@
     margin: 15px;
 }
 
+#home-body .nav-cell {
+    position: relative;
+    height: 35rem;
+    width: 46rem;
+    background-color: black;
+    margin: 10px;
+    text-align: center;
+    color: white;
+}
+
+    #home-body .nav-cell .nav-cell-img-holder {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    #home-body .nav-cell .nav-cell-img-holder img {
+        max-width: 40rem;
+        max-height: 35rem;
+    }
+
+    #home-body .nav-cell:hover {
+        cursor: pointer;
+    }
+
+#home-footer {
+    text-align: center;
+}
+
 #api-container .spaceable {
     margin-bottom: 2px;
 }
