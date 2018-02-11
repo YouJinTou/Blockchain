@@ -18,6 +18,11 @@ namespace Web.Areas.Node.Controllers
         {
             try
             {
+                if (string.IsNullOrEmpty(hash))
+                {
+                    throw new ArgumentException("Transaction is required.");
+                }
+
                 return new JsonResult(this.NodeService.GetTransaction(hash));
             }
             catch (Exception ex)
