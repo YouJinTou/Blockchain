@@ -17,6 +17,8 @@ namespace Services.Nodes
 
         void RegisterAddress(RegisterUserModel model);
 
+        Block GetBlock(string hash);
+
         Transaction GetTransaction(string hash);
 
         void ReceiveBlock(Block block);

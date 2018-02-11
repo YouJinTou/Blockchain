@@ -73,6 +73,19 @@ namespace Services.Nodes
             this.node.RegisterAddress(model.Address, model.Balance);
         }
 
+        public Block GetBlock(string hash)
+        {
+            foreach (var block in this.node.Blockchain)
+            {
+                if (block.Hash.Equals(hash))
+                {
+                    return block;
+                }
+            }
+
+            throw new ArgumentException($"Invalid hash {hash}.");
+        }
+
         public Transaction GetTransaction(string hash)
         {
             foreach (var block in this.node.Blockchain)
