@@ -76,11 +76,11 @@ namespace Models
             }
         }
 
-        public void ReceiveBlock(Block block)
+        public bool ReceiveBlock(Block block)
         {
             if (!this.chainValidator.BlockIsValid(this.blockchain.Last?.Value, block))
             {
-                return;
+                return false;
             }
 
             this.blockchain.AddLast(block);
@@ -88,6 +88,8 @@ namespace Models
             this.AdjustBalances(block);
 
             this.BroadcastBlock(block);
+
+            return true;
         }
 
         public void ReceiveTransaction(Transaction transaction, SignedMessage signature)
