@@ -30,6 +30,9 @@ namespace Tests.Models
             this.genesisBlock = new Block(
                 0, new List<Transaction>(), Difficulty, string.Empty, minerAddress, 0);
             this.block1 = this.GetValidBlock(this.genesisBlock.Hash, this.genesisBlock.Id);
+
+            this.node1.RegisterAddress(this.minerAddress, 0.0m);
+            this.node2.RegisterAddress(this.minerAddress, 0.0m);
         }
 
         [TestCase]
