@@ -165,7 +165,13 @@ namespace Models
             foreach (var transaction in block.Transactions)
             {
                 var matchingTransaction = 
-                    this.pendingTransactions.First(t => t.Hash == transaction.Hash);
+                    this.pendingTransactions.FirstOrDefault(t => t.Hash == transaction.Hash);
+
+                if (matchingTransaction == null)
+                {
+                    continue;
+                }
+
                 this.balances[matchingTransaction.From] -= matchingTransaction.Amount;
                 this.balances[matchingTransaction.To] += matchingTransaction.Amount;
 
