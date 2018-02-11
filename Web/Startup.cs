@@ -11,6 +11,7 @@ using Services.Faucet;
 using Services.Generation;
 using Services.Nodes;
 using Services.Wallets;
+using Services.Web;
 using Web.Config;
 
 namespace Web
@@ -28,6 +29,7 @@ namespace Web
         {
             services.AddMvc();
             services.AddSingleton<INodeService, NodeService>();
+            services.AddSingleton<IWebService, WebService>();
             services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
             services.AddTransient<ITransactionValidator, TransactionValidator>();
