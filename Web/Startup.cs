@@ -29,7 +29,7 @@ namespace Web
         {
             services.AddMvc();
             services.AddSingleton<INodeService, NodeService>();
-            services.AddSingleton<IWebService, WebService>();
+            services.AddTransient<IWebService, WebService>();
             services.AddTransient<IHasher, Sha256Hasher>();
             services.AddTransient<IBlockchainValidator, BlockchainValidator>();
             services.AddTransient<ITransactionValidator, TransactionValidator>();
