@@ -5,7 +5,7 @@ using Services.Wallets;
 using System;
 using Web.Areas.Wallets.Models;
 
-namespace Web.Controllers
+namespace Web.Areas.Wallets.Controllers
 {
     [Area("Wallets")]
     [Route("[area]")]

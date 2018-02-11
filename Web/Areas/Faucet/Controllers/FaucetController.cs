@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Models.Web.Faucet;
-using Models.Web.Wallets;
 using Services.Faucet;
 using System;
 using Web.Areas.Faucet.Models;

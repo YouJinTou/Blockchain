@@ -5,7 +5,7 @@ using Services.Nodes;
 using System.Collections.Generic;
 using Web.Areas.Explorer.Models;
 
-namespace Web.Controllers
+namespace Web.Areas.Explorer.Controllers
 {
     [Area("Explorer")]
     [Route("[area]")]
