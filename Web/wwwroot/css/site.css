@@ -50,7 +50,12 @@
 
     #home-body .nav-cell:hover {
         cursor: pointer;
+        background-color: #6b6b6b;
     }
+
+        #home-body .nav-cell:hover .nav-cell-img-holder {
+            background-color: #6b6b6b;
+        }
 
 #home-footer {
     text-align: center;
