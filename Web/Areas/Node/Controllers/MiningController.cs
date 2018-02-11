@@ -26,7 +26,7 @@ namespace Web.Areas.Node.Controllers
                 return BadRequest(aex.Message);
             }
 
-            return Ok();
+            return Ok("Successfully mined block.");
         }
     }
 }
