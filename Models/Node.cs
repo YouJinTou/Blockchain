@@ -184,6 +184,13 @@ namespace Models
             {
                 this.pendingTransactions.Remove(transaction);
             }
+
+            this.RewardMiner(block);
+        }
+
+        private void RewardMiner(Block block)
+        {
+            this.balances[block.MinedBy] += block.Transactions.Count;
         }
 
         private void BroadcastBlock(Block block)
