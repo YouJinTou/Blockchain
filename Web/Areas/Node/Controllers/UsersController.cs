@@ -19,6 +19,11 @@ namespace Web.Areas.Node.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    throw new ArgumentException("Invalid data.");
+                }
+
                 this.NodeService.RegisterAddress(model);
             }
             catch (ArgumentException aex)
