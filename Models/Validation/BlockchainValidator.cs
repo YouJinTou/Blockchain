@@ -14,12 +14,6 @@ namespace Models.Validation
 
         public bool ShouldUpdateChain(Node thisPeer, Node otherPeer)
         {
-            if (!this.BlockIsValid(
-                thisPeer.Blockchain.Last?.Value, otherPeer.Blockchain.Last?.Value))
-            {
-                return false;
-            }
-
             if (this.ShouldRequestChain(
                 thisPeer.Blockchain.Last?.Value, otherPeer.Blockchain.Last?.Value))
             {
@@ -46,6 +40,11 @@ namespace Models.Validation
                 return false;
             }
 
+            if (currentTailBlock.Id != newBlock.Id - 1)
+            {
+                return false;
+            }
+
             if (currentTailBlock.Hash != newBlock.PreviousHash)
             {
                 return false;
@@ -59,6 +58,11 @@ namespace Models.Validation
             if (currentTailBlock == null && newBlock != null)
             {
                 return true;
+            }
+
+            if (currentTailBlock == null)
+            {
+                return false;
             }
 
             return (currentTailBlock.Id < newBlock.Id);
