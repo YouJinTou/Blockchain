@@ -20,13 +20,13 @@ namespace Web.Areas.Node.Controllers
             try
             {
                 this.NodeService.ReceiveBlock(block);
+
+                return Ok("Successfully mined block.");
             }
             catch (ArgumentException aex)
             {
                 return BadRequest(aex.Message);
             }
-
-            return Ok("Successfully mined block.");
         }
     }
 }
