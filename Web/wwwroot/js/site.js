@@ -16,9 +16,24 @@
         var area = 'Node';
         var controller = $this.data('controller');
         var action = $this.data('action');
-        var url = area + '/' + controller + '/' + action;
+        var param = getParam($this);
+        param = param ? '/' + param : '';
+        var url = area + '/' + controller + '/' + action + param;
 
         return url;
+    }
+
+    function getParam($this) {
+        var param = $this.data('param');
+
+        if (param) {
+            return $this
+                .closest('[data-get-container]')
+                .find('[data-param]')
+                .val();
+        }
+
+        return '';
     }
 
     function getData($this) {
