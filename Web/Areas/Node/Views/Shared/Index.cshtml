@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Node API";
+}
+
+<h1>Node API</h1>
+
+<div class="row form-group">
+    <div class="col-xs-8 col-xs-offset-2">
+        <div class="row form-group">
+            <div class="col-xs-2">
+                <input asp-area="Node" asp-controller="Node"
+                       asp-action="Get" class="btn btn-group" value="Node" />
+            </div>
+        </div>
+
+        <hr />
+
+        @Html.Partial("_DataPartial")
+    </div>
+</div>

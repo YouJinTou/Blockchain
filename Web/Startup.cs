@@ -66,8 +66,8 @@ namespace Web
                     name: "walletsRoute",
                     template: "Wallets/{controller=Wallets}/{action=Index}/{id?}");
                 routes.MapRoute(
-                    name: "nodesRoute",
-                    template: "Node/{controller=Node}/{action=Get}/{id?}");
+                    name: "nodeRoute",
+                    template: "Node/{controller=Base}/{action=Index}/{id?}");
                 routes.MapRoute(
                     name: "faucetRoute",
                     template: "Faucet/{controller=Faucet}/{action=Index}/{id?}");

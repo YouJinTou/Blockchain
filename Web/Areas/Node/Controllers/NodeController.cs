@@ -5,7 +5,7 @@ using System;
 
 namespace Web.Controllers
 {
-    [Route("[area]")]
+    [Route("[area]/[controller]")]
     public class NodeController : BaseController
     {
         public NodeController(INodeService nodeService)

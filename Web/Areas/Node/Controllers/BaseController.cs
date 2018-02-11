@@ -4,7 +4,8 @@ using Services.Nodes;
 namespace Web.Controllers
 {
     [Area("Node")]
-    public class BaseController : ControllerBase
+    [Route("[area]")]
+    public class BaseController : Controller
     {
         private INodeService nodeService;
 
@@ -14,5 +15,11 @@ namespace Web.Controllers
         }
 
         protected INodeService NodeService => this.nodeService;
+
+        [Route("")]
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }
