@@ -52,7 +52,9 @@
     function doGet(url) {
         $.get(url, function (result) {
             appendResult(result);
-        })
+        }).fail(function (ex) {
+            appendResult(ex.responseJSON);
+        });
     }
 
     function doPost(url, data) {
@@ -69,7 +71,7 @@
                 appendResult(result);
             },
             'error': function (ex) {
-                appendResult(ex.statusText);
+                appendResult(ex.responseJSON);
             }
         });
     }
