@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Models;
 using Models.Validation;
 using Models.Web.Nodes;
@@ -8,6 +7,7 @@ using Models.Web.Users;
 using Models.Web.Wallets;
 using Secp256k1;
 using Services.Generation;
+using Services.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +17,15 @@ namespace Services.Nodes
     public class NodeService : INodeService
     {
         private Node node;
+        private IWebService webService;
+        private IOptions<Endpoints> endpoints;
 
         public NodeService(
+            IWebService webService,
             IBlockGenerator blockGenerator,
             IBlockchainValidator chainValidator,
             ITransactionValidator transactionValidator,
+            IOptions<Endpoints> endpoints,
             IOptions<NodeSettings> nodeSettings,
             IOptions<FaucetSettings> faucetSettings)
         {
@@ -30,6 +34,8 @@ namespace Services.Nodes
                 new Uri(nodeSettings.Value.Address),
                 chainValidator,
                 transactionValidator);
+            this.webService = webService;
+            this.endpoints = endpoints;
             var transaction = new Transaction(
                 faucetSettings.Value.Address,
                 faucetSettings.Value.Address,
@@ -56,7 +62,10 @@ namespace Services.Nodes
 
         public void AddPeer(AddPeerModel model)
         {
-            this.node.AddPeer(Mapper.Map<AddPeerModel, Node>(model));
+            var endpoint = $"{model.NetworkAddress.ToString()}{this.endpoints.Value.GetNode}";
+            var peer = this.webService.GetDeserialized<Node>(endpoint);
+
+            this.node.AddPeer(peer);
         }
 
         public void RegisterAddress(RegisterUserModel model)
@@ -82,7 +91,16 @@ namespace Services.Nodes
 
         public void ReceiveBlock(Block block)
         {
-            this.node.ReceiveBlock(block);
+            if (this.node.ReceiveBlock(block))
+            {
+                foreach (var peer in this.node.Peers)
+                {
+                    var endpoint = 
+                        $"{peer.NetworkAddress.ToString()}{this.endpoints.Value.ReceiveBlock}";
+
+                    this.webService.SendSerialized(endpoint, block);
+                }
+            }
         }
 
         public decimal GetAddressBalance(string address)
