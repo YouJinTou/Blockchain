@@ -9,6 +9,9 @@ namespace MiningClient
 {
     public class Client
     {
+        private static readonly string Endpoint = "http://localhost:60000/";
+        private static readonly string NodeEndpoint = $"{Endpoint}node";
+        private static readonly string SendEndpoint = $"{Endpoint}node/mining/receive";
         private static readonly HttpClient client = new HttpClient();
 
         public static void Main()
@@ -35,7 +38,7 @@ namespace MiningClient
 
         public static Node GetNodeInfo()
         {
-            var responseString = client.GetStringAsync("http://localhost:60000/node").Result;
+            var responseString = client.GetStringAsync(NodeEndpoint).Result;
             var node = JsonConvert.DeserializeObject<Node>(responseString);
 
             return node;
@@ -43,8 +46,9 @@ namespace MiningClient
 
         public static void SendBlock(Block block)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(block), Encoding.UTF8, "application/json");
-            var response = client.PostAsync(new Uri("http://localhost:60000/node/mining/receive"), content).Result;
+            var content = new StringContent(
+                JsonConvert.SerializeObject(block), Encoding.UTF8, "application/json");
+            var response = client.PostAsync(new Uri(SendEndpoint), content).Result;
             var responseString = response.Content.ReadAsStringAsync().Result;
 
             Console.WriteLine(responseString);
