@@ -10,7 +10,7 @@ namespace MiningClient
     public class Client
     {
         private static readonly string Endpoint = "http://localhost:60000/";
-        private static readonly string NodeEndpoint = $"{Endpoint}node";
+        private static readonly string NodeEndpoint = $"{Endpoint}node/node/get";
         private static readonly string SendEndpoint = $"{Endpoint}node/mining/receive";
         private static readonly HttpClient client = new HttpClient();
 
